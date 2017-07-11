@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/StickySidebar.js",
-  "dependencies": {},
+  "dependencies": {
+    "babel-core": "^6.25.0"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

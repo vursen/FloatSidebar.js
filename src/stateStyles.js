@@ -1,4 +1,4 @@
-export default const STATE_STYLES = {
+export default {
   START: (d, innerEl) => {
     innerEl.style.position = 'static';
     innerEl.style.top      = 'auto';

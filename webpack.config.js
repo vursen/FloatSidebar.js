@@ -2,7 +2,9 @@ const webpack = require('webpack');
 const path    = require('path');
 
 module.exports = {
-  entry: 'src/StickySidebar.js',
+  entry: {
+    StickySidebar: path.resolve(__dirname, 'src/StickySidebar.js')
+  },
 
   output: {
     filename: '[name].js',

@@ -1,4 +1,4 @@
-export default const TRANSITIONS = {
+export default {
   START: [
     {
       to: 'FINISH',
