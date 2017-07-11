@@ -122,6 +122,7 @@ function StickySidebar(el, props) {
     __wrapperEl.style.willChange = 'height';
 
     __innerEl.style.width = 'inherit';
+    __innerEl.style.willChange = 'transform';
 
     __lastViewportTop = dimensions.viewportTop;
     __lastFinishPoint = dimensions.finishPoint;
