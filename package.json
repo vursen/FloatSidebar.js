@@ -1,7 +1,7 @@
 {
   "name": "sticky-sidebar",
   "version": "1.0.0",
-  "description": "",
+  "description": "Sticky sidebar panel",
   "main": "dist/StickySidebar.js",
   "dependencies": {
     "babel-core": "^6.25.0"
