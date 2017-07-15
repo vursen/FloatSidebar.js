@@ -1,0 +1,101 @@
+<html>
+  <head>
+    <script src="../dist/StickySidebar.js"></script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      .container {
+        margin: 0 auto;
+        width: 960px;
+        overflow: hidden;
+        padding: 50px 0 300px;
+      }
+
+      .content {
+        height: 500vh;
+        float: left;
+        width: 720px;
+        background: #ccc;
+        margin: 0 20px 0 0;
+      }
+
+      .sidebar {
+        position: relative;
+        float: left;
+        width: 220px;
+      }
+
+      .sidebar__inner {
+        border: 1px solid red;
+      }
+
+      .sidebar__section {
+        height: 50px;
+        padding: 0 10px;
+        line-height: 50px;
+        border-bottom: 1px solid red;
+        cursor: pointer;
+      }
+
+      .sidebar__section:hover {
+        background: #eee;
+      }
+
+      .sidebar__section.is-opened {
+        height: 300px;
+      }
+    </style>
+
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        var sidebarEl      = document.querySelector('.sidebar');
+        var sidebarInnerEl = document.querySelector('.sidebar__inner');
+        var contentEl      = document.querySelector('.content');
+
+        var stickySidebar = StickySidebar(sidebarEl, {
+          relativeEl: contentEl,
+          innerEl: sidebarInnerEl,
+          topSpacing: 20,
+          bottomSpacing: 20
+        });
+
+        sidebarEl.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if (target.matches('.sidebar__section')) {
+            target.classList.toggle('is-opened');
+          }
+
+          stickySidebar.forceUpdate();
+        })
+      });
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+
+      </div>
+
+      <div class="sidebar">
+        <div class="sidebar__inner">
+          <div class="sidebar__section is-opened">
+            1 section
+          </div>
+          <div class="sidebar__section is-opened">
+            2 section
+          </div>
+          <div class="sidebar__section is-opened">
+            3 section
+          </div>
+          <div class="sidebar__section">
+            4 section
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

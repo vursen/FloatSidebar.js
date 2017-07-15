@@ -2,14 +2,17 @@ export default {
   START: [
     {
       to: 'FINISH',
-      cond: (d) => [d.innerOffsetBottom >= d.finishPoint]
+      cond: (d) => [
+        d.isInnerFitsContainer === true,
+        d.viewportBottom >= d.finishPoint
+      ]
     },
     {
       to: 'BOTTOM_FIXED',
       cond: (d) => [
         d.isInnerFitsContainer === true,
         d.isInnerFitsViewport === false,
-        d.viewportBottom >= d.innerOffsetBottom + d.bottomSpacing - 1
+        d.viewportBottom >= d.innerOffsetBottom + d.bottomSpacing
       ],
     },
     {
@@ -79,11 +82,12 @@ export default {
       cond: (d) => [d.scrollDirection === 'up']
     },
     {
+      to: 'TOP_FIXED',
+      cond: (d) => [d.isInnerFitsViewport === true,]
+    },
+    {
       to: 'FINISH',
-      cond: (d) => [
-        d.scrollDirection === 'down',
-        d.innerOffsetBottom >= d.finishPoint
-      ]
+      cond: (d) => [d.innerOffsetBottom >= d.finishPoint]
     }
   ],
 
@@ -101,10 +105,7 @@ export default {
     },
     {
       to: 'TOP_FIXED',
-      cond: (d) => [
-        d.scrollDirection === 'up',
-        d.viewportTop <= d.innerOffsetTop - d.topSpacing
-      ]
+      cond: (d) => [d.viewportTop <= d.innerOffsetTop - d.topSpacing]
     }
   ]
 }

@@ -10,11 +10,12 @@ import STATE_STYLES from './stateStyles.js';
 //   return { mutate, measure }
 // })();
 
-function StickySidebar(el, props) {
+function StickySidebar(sidebarEl, props) {
   props = {
     topSpacing: 0,
     bottomSpacing: 0,
     relativeEl: null,
+    innerEl: null,
     // FastDOMAdapter: DefaultFastDOMAdapter,
     ...props,
   };
@@ -23,9 +24,9 @@ function StickySidebar(el, props) {
   let __lastViewportTop = -1;
   let __lastFinishPoint = -1;
 
-  let __wrapperEl  = el;
-  let __innerEl    = el.firstChild;
-  let __relativeEl = props.relativeEl;
+  let __sidebarEl      = sidebarEl;
+  let __innerEl        = props.innerEl;
+  let __relativeEl     = props.relativeEl;
 
   // const measureDOM = (callback) => props.FastDOMAdapter.measure(callback);
   // const mutateDOM  = (callback) => props.FastDOMAdapter.mutate(callback);
@@ -51,7 +52,7 @@ function StickySidebar(el, props) {
     }
 
     if (__lastFinishPoint - dimensions.finishPoint !== 0) {
-      updateWrapperStyles(dimensions);
+      updateSidebarStyles(dimensions);
     }
 
     __lastViewportTop = dimensions.viewportTop;
@@ -62,15 +63,15 @@ function StickySidebar(el, props) {
     const viewportTop       = window.pageYOffset;
     const viewportHeight    = window.innerHeight;
 
-    const innerElRect       = __innerEl.getBoundingClientRect();
-    const wrapperElRect     = __wrapperEl.getBoundingClientRect();
-    const relativeElRect    = __relativeEl.getBoundingClientRect();
+    const innerElRect    = __innerEl.getBoundingClientRect();
+    const sidebarElRect  = __sidebarEl.getBoundingClientRect();
+    const relativeElRect = __relativeEl.getBoundingClientRect();
 
     const innerOffsetTop    = innerElRect.top    + viewportTop;
     const innerOffsetBottom = innerElRect.bottom + viewportTop;
     const innerHeight       = innerElRect.height;
 
-    const startPoint  = wrapperElRect.top     + viewportTop;
+    const startPoint  = sidebarElRect.top     + viewportTop;
     const finishPoint = relativeElRect.bottom + viewportTop;
 
     let scrollDirection = 'notChanged';
@@ -96,10 +97,10 @@ function StickySidebar(el, props) {
     };
   };
 
-  const updateWrapperStyles = (d) => {
+  const updateSidebarStyles = (d) => {
     const height = d.wayHeight > d.innerHeight ? d.wayHeight : d.innerHeight;
 
-    __wrapperEl.style.height = height + 'px';
+    __sidebarEl.style.height = height + 'px';
   };
 
   const forceUpdate = () => {
@@ -117,11 +118,11 @@ function StickySidebar(el, props) {
 
     if (transition) performTransition(transition, dimensions);
 
-    updateWrapperStyles(dimensions);
+    updateSidebarStyles(dimensions);
 
-    __wrapperEl.style.willChange = 'height';
+    __sidebarEl.style.willChange = 'height';
 
-    __innerEl.style.width = 'inherit';
+    __innerEl.style.width      = 'inherit';
     __innerEl.style.willChange = 'transform';
 
     __lastViewportTop = dimensions.viewportTop;

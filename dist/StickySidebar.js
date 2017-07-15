@@ -3,10 +3,10 @@
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
 		define([], factory);
-	else {
-		var a = factory();
-		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
-	}
+	else if(typeof exports === 'object')
+		exports["StickySidebar"] = factory();
+	else
+		root["StickySidebar"] = factory();
 })(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -96,19 +96,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //   return { mutate, measure }
 // })();
 
-function StickySidebar(el, props) {
+function StickySidebar(sidebarEl, props) {
   props = _extends({
     topSpacing: 0,
     bottomSpacing: 0,
-    relativeEl: null
+    relativeEl: null,
+    innerEl: null
   }, props);
 
   var __state = 'START';
   var __lastViewportTop = -1;
   var __lastFinishPoint = -1;
 
-  var __wrapperEl = el;
-  var __innerEl = el.firstChild;
+  var __sidebarEl = sidebarEl;
+  var __innerEl = props.innerEl;
   var __relativeEl = props.relativeEl;
 
   // const measureDOM = (callback) => props.FastDOMAdapter.measure(callback);
@@ -140,7 +141,7 @@ function StickySidebar(el, props) {
     }
 
     if (__lastFinishPoint - dimensions.finishPoint !== 0) {
-      updateWrapperStyles(dimensions);
+      updateSidebarStyles(dimensions);
     }
 
     __lastViewportTop = dimensions.viewportTop;
@@ -152,14 +153,14 @@ function StickySidebar(el, props) {
     var viewportHeight = window.innerHeight;
 
     var innerElRect = __innerEl.getBoundingClientRect();
-    var wrapperElRect = __wrapperEl.getBoundingClientRect();
+    var sidebarElRect = __sidebarEl.getBoundingClientRect();
     var relativeElRect = __relativeEl.getBoundingClientRect();
 
     var innerOffsetTop = innerElRect.top + viewportTop;
     var innerOffsetBottom = innerElRect.bottom + viewportTop;
     var innerHeight = innerElRect.height;
 
-    var startPoint = wrapperElRect.top + viewportTop;
+    var startPoint = sidebarElRect.top + viewportTop;
     var finishPoint = relativeElRect.bottom + viewportTop;
 
     var scrollDirection = 'notChanged';
@@ -185,10 +186,10 @@ function StickySidebar(el, props) {
     };
   };
 
-  var updateWrapperStyles = function updateWrapperStyles(d) {
+  var updateSidebarStyles = function updateSidebarStyles(d) {
     var height = d.wayHeight > d.innerHeight ? d.wayHeight : d.innerHeight;
 
-    __wrapperEl.style.height = height + 'px';
+    __sidebarEl.style.height = height + 'px';
   };
 
   var forceUpdate = function forceUpdate() {
@@ -207,11 +208,12 @@ function StickySidebar(el, props) {
 
       if (transition) performTransition(transition, dimensions);
 
-      updateWrapperStyles(dimensions);
+      updateSidebarStyles(dimensions);
 
-      __wrapperEl.style.willChange = 'height';
+      __sidebarEl.style.willChange = 'height';
 
       __innerEl.style.width = 'inherit';
+      __innerEl.style.willChange = 'transform';
 
       __lastViewportTop = dimensions.viewportTop;
       __lastFinishPoint = dimensions.finishPoint;
@@ -259,12 +261,12 @@ function rAFScrollWrapper(callback) {
   START: [{
     to: 'FINISH',
     cond: function cond(d) {
-      return [d.innerOffsetBottom >= d.finishPoint];
+      return [d.isInnerFitsContainer === true, d.viewportBottom >= d.finishPoint];
     }
   }, {
     to: 'BOTTOM_FIXED',
     cond: function cond(d) {
-      return [d.isInnerFitsContainer === true, d.isInnerFitsViewport === false, d.viewportBottom >= d.innerOffsetBottom + d.bottomSpacing - 1];
+      return [d.isInnerFitsContainer === true, d.isInnerFitsViewport === false, d.viewportBottom >= d.innerOffsetBottom + d.bottomSpacing];
     }
   }, {
     to: 'TOP_FIXED',
@@ -328,9 +330,14 @@ function rAFScrollWrapper(callback) {
       return [d.scrollDirection === 'up'];
     }
   }, {
+    to: 'TOP_FIXED',
+    cond: function cond(d) {
+      return [d.isInnerFitsViewport === true];
+    }
+  }, {
     to: 'FINISH',
     cond: function cond(d) {
-      return [d.scrollDirection === 'down', d.innerOffsetBottom >= d.finishPoint];
+      return [d.innerOffsetBottom >= d.finishPoint];
     }
   }],
 
@@ -347,7 +354,7 @@ function rAFScrollWrapper(callback) {
   }, {
     to: 'TOP_FIXED',
     cond: function cond(d) {
-      return [d.scrollDirection === 'up', d.viewportTop <= d.innerOffsetTop - d.topSpacing];
+      return [d.viewportTop <= d.innerOffsetTop - d.topSpacing];
     }
   }]
 });
@@ -390,5 +397,5 @@ function rAFScrollWrapper(callback) {
 });
 
 /***/ })
-/******/ ]);
+/******/ ])["default"];
 });
