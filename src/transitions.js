@@ -4,7 +4,7 @@ export default {
       to: 'FINISH',
       cond: (d) => [
         d.isInnerFitsContainer === true,
-        d.viewportBottom >= d.finishPoint
+        d.viewportTop + d.innerHeight >= d.finishPoint
       ]
     },
     {

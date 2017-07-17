@@ -21,8 +21,7 @@ function StickySidebar(sidebarEl, props) {
   };
 
   let __state = 'START';
-  let __lastViewportTop = -1;
-  let __lastFinishPoint = -1;
+  let __lastDimensions = {};
 
   let __sidebarEl      = sidebarEl;
   let __innerEl        = props.innerEl;
@@ -40,6 +39,8 @@ function StickySidebar(sidebarEl, props) {
   const performTransition = ({ to: newState }, dimensions) => {
     __state = newState;
 
+    console.log(newState, dimensions)
+
     STATE_STYLES[newState](dimensions, __innerEl);
   };
 
@@ -51,12 +52,12 @@ function StickySidebar(sidebarEl, props) {
       performTransition(transition, dimensions);
     }
 
-    if (__lastFinishPoint - dimensions.finishPoint !== 0) {
-      updateSidebarStyles(dimensions);
-    }
+    if (
+      __lastDimensions.wayHeight   - dimensions.wayHeight   !== 0 ||
+      __lastDimensions.innerHeight - dimensions.innerHeight !== 0
+    ) updateSidebarStyles(dimensions);
 
-    __lastViewportTop = dimensions.viewportTop;
-    __lastFinishPoint = dimensions.finishPoint;
+    __lastDimensions = dimensions;
   });
 
   const calculateDimensions = () => {
@@ -76,8 +77,8 @@ function StickySidebar(sidebarEl, props) {
 
     let scrollDirection = 'notChanged';
 
-    scrollDirection = __lastViewportTop < viewportTop ? 'down' : scrollDirection;
-    scrollDirection = __lastViewportTop > viewportTop ? 'up'   : scrollDirection;
+    scrollDirection = __lastDimensions.viewportTop < viewportTop ? 'down' : scrollDirection;
+    scrollDirection = __lastDimensions.viewportTop > viewportTop ? 'up'   : scrollDirection;
 
     return {
       startPoint:           startPoint,
@@ -125,8 +126,7 @@ function StickySidebar(sidebarEl, props) {
     __innerEl.style.width      = 'inherit';
     __innerEl.style.willChange = 'transform';
 
-    __lastViewportTop = dimensions.viewportTop;
-    __lastFinishPoint = dimensions.finishPoint;
+    __lastDimensions = dimensions;
 
     window.addEventListener('scroll', updateTick);
     window.addEventListener('resize', updateTick);

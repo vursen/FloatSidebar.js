@@ -105,8 +105,7 @@ function StickySidebar(sidebarEl, props) {
   }, props);
 
   var __state = 'START';
-  var __lastViewportTop = -1;
-  var __lastFinishPoint = -1;
+  var __lastDimensions = {};
 
   var __sidebarEl = sidebarEl;
   var __innerEl = props.innerEl;
@@ -129,6 +128,8 @@ function StickySidebar(sidebarEl, props) {
 
     __state = newState;
 
+    console.log(newState, dimensions);
+
     __WEBPACK_IMPORTED_MODULE_2__stateStyles_js__["a" /* default */][newState](dimensions, __innerEl);
   };
 
@@ -140,12 +141,9 @@ function StickySidebar(sidebarEl, props) {
       performTransition(transition, dimensions);
     }
 
-    if (__lastFinishPoint - dimensions.finishPoint !== 0) {
-      updateSidebarStyles(dimensions);
-    }
+    if (__lastDimensions.wayHeight - dimensions.wayHeight !== 0 || __lastDimensions.innerHeight - dimensions.innerHeight !== 0) updateSidebarStyles(dimensions);
 
-    __lastViewportTop = dimensions.viewportTop;
-    __lastFinishPoint = dimensions.finishPoint;
+    __lastDimensions = dimensions;
   });
 
   var calculateDimensions = function calculateDimensions() {
@@ -165,8 +163,8 @@ function StickySidebar(sidebarEl, props) {
 
     var scrollDirection = 'notChanged';
 
-    scrollDirection = __lastViewportTop < viewportTop ? 'down' : scrollDirection;
-    scrollDirection = __lastViewportTop > viewportTop ? 'up' : scrollDirection;
+    scrollDirection = __lastDimensions.viewportTop < viewportTop ? 'down' : scrollDirection;
+    scrollDirection = __lastDimensions.viewportTop > viewportTop ? 'up' : scrollDirection;
 
     return {
       startPoint: startPoint,
@@ -215,8 +213,7 @@ function StickySidebar(sidebarEl, props) {
       __innerEl.style.width = 'inherit';
       __innerEl.style.willChange = 'transform';
 
-      __lastViewportTop = dimensions.viewportTop;
-      __lastFinishPoint = dimensions.finishPoint;
+      __lastDimensions = dimensions;
 
       window.addEventListener('scroll', updateTick);
       window.addEventListener('resize', updateTick);
@@ -261,7 +258,7 @@ function rAFScrollWrapper(callback) {
   START: [{
     to: 'FINISH',
     cond: function cond(d) {
-      return [d.isInnerFitsContainer === true, d.viewportBottom >= d.finishPoint];
+      return [d.isInnerFitsContainer === true, d.viewportTop + d.innerHeight >= d.finishPoint];
     }
   }, {
     to: 'BOTTOM_FIXED',
