@@ -1,14 +1,7 @@
-import rAFScrollWrapper from './rAFScrollWrapper.js';
+import rAFScrollWrapper from './utils/rAFScrollWrapper.js';
 
-import TRANSITIONS  from './transitions.js';
-import STATE_STYLES from './stateStyles.js';
-
-// const DefaultFastDOMAdapter = (() => {
-//   const measure = (callback) => Promise.resolve(callback())
-//   const mutate  = (callback) => Promise.resolve(callback())
-
-//   return { mutate, measure }
-// })();
+import TRANSITIONS  from './constants/transitions.js';
+import STATE_STYLES from './constants/stateStyles.js';
 
 function StickySidebar(sidebarEl, props) {
   props = {
@@ -16,19 +9,15 @@ function StickySidebar(sidebarEl, props) {
     bottomSpacing: 0,
     relativeEl: null,
     innerEl: null,
-    // FastDOMAdapter: DefaultFastDOMAdapter,
     ...props,
   };
 
   let __state = 'START';
   let __lastDimensions = {};
 
-  let __sidebarEl      = sidebarEl;
-  let __innerEl        = props.innerEl;
-  let __relativeEl     = props.relativeEl;
-
-  // const measureDOM = (callback) => props.FastDOMAdapter.measure(callback);
-  // const mutateDOM  = (callback) => props.FastDOMAdapter.mutate(callback);
+  let __sidebarEl  = sidebarEl;
+  let __innerEl    = props.innerEl;
+  let __relativeEl = props.relativeEl;
 
   const findTransition = (state, dimensions) => {
     return TRANSITIONS[state].find(({ cond }) => (
@@ -39,26 +28,18 @@ function StickySidebar(sidebarEl, props) {
   const performTransition = ({ to: newState }, dimensions) => {
     __state = newState;
 
-    console.log(newState, dimensions)
-
     STATE_STYLES[newState](dimensions, __innerEl);
   };
 
-  const updateTick = rAFScrollWrapper(() => {
-    const dimensions = calculateDimensions();
-    const transition = findTransition(__state, dimensions);
+  const needUpdateSidebarStyles = (dimensions) => (
+    __lastDimensions.wayHeight   - dimensions.wayHeight   !== 0 ||
+    __lastDimensions.innerHeight - dimensions.innerHeight !== 0
+  );
 
-    if (transition) {
-      performTransition(transition, dimensions);
-    }
-
-    if (
-      __lastDimensions.wayHeight   - dimensions.wayHeight   !== 0 ||
-      __lastDimensions.innerHeight - dimensions.innerHeight !== 0
-    ) updateSidebarStyles(dimensions);
-
-    __lastDimensions = dimensions;
-  });
+  const calculateScrollDirection = (viewportTop) => (
+    __lastDimensions.viewportTop < viewportTop ? 'down' :
+    __lastDimensions.viewportTop > viewportTop ? 'up'   : 'notChanged'
+  );
 
   const calculateDimensions = () => {
     const viewportTop       = window.pageYOffset;
@@ -75,10 +56,7 @@ function StickySidebar(sidebarEl, props) {
     const startPoint  = sidebarElRect.top     + viewportTop;
     const finishPoint = relativeElRect.bottom + viewportTop;
 
-    let scrollDirection = 'notChanged';
-
-    scrollDirection = __lastDimensions.viewportTop < viewportTop ? 'down' : scrollDirection;
-    scrollDirection = __lastDimensions.viewportTop > viewportTop ? 'up'   : scrollDirection;
+    const scrollDirection = calculateScrollDirection(viewportTop);
 
     return {
       startPoint:           startPoint,
@@ -98,11 +76,28 @@ function StickySidebar(sidebarEl, props) {
     };
   };
 
-  const updateSidebarStyles = (d) => {
-    const height = d.wayHeight > d.innerHeight ? d.wayHeight : d.innerHeight;
+  const updateSidebarStyles = (dimensions) => {
+    const height = dimensions.wayHeight > dimensions.innerHeight ?
+      dimensions.wayHeight :
+      dimensions.innerHeight;
 
-    __sidebarEl.style.height = height + 'px';
+    __sidebarEl.style.height = `${height}px`;
   };
+
+  const updateTick = rAFScrollWrapper(() => {
+    const dimensions = calculateDimensions();
+    const transition = findTransition(__state, dimensions);
+
+    if (transition) {
+      performTransition(transition, dimensions);
+    }
+
+    if (needUpdateSidebarStyles(dimensions)) {
+      updateSidebarStyles(dimensions);
+    }
+
+    __lastDimensions = dimensions;
+  });
 
   const forceUpdate = () => {
     updateTick();
@@ -117,7 +112,9 @@ function StickySidebar(sidebarEl, props) {
     const dimensions = calculateDimensions();
     const transition = findTransition(__state, dimensions);
 
-    if (transition) performTransition(transition, dimensions);
+    if (transition) {
+      performTransition(transition, dimensions);
+    }
 
     updateSidebarStyles(dimensions);
 

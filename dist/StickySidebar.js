@@ -79,22 +79,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rAFScrollWrapper_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__transitions_js__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stateStyles_js__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__utils_rAFScrollWrapper_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants_transitions_js__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__constants_stateStyles_js__ = __webpack_require__(3);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 
 
 
 
-
-// const DefaultFastDOMAdapter = (() => {
-//   const measure = (callback) => Promise.resolve(callback())
-//   const mutate  = (callback) => Promise.resolve(callback())
-
-//   return { mutate, measure }
-// })();
 
 function StickySidebar(sidebarEl, props) {
   props = _extends({
@@ -111,11 +104,8 @@ function StickySidebar(sidebarEl, props) {
   var __innerEl = props.innerEl;
   var __relativeEl = props.relativeEl;
 
-  // const measureDOM = (callback) => props.FastDOMAdapter.measure(callback);
-  // const mutateDOM  = (callback) => props.FastDOMAdapter.mutate(callback);
-
   var findTransition = function findTransition(state, dimensions) {
-    return __WEBPACK_IMPORTED_MODULE_1__transitions_js__["a" /* default */][state].find(function (_ref) {
+    return __WEBPACK_IMPORTED_MODULE_1__constants_transitions_js__["a" /* default */][state].find(function (_ref) {
       var cond = _ref.cond;
       return cond(dimensions).every(function (value) {
         return value;
@@ -128,23 +118,16 @@ function StickySidebar(sidebarEl, props) {
 
     __state = newState;
 
-    console.log(newState, dimensions);
-
-    __WEBPACK_IMPORTED_MODULE_2__stateStyles_js__["a" /* default */][newState](dimensions, __innerEl);
+    __WEBPACK_IMPORTED_MODULE_2__constants_stateStyles_js__["a" /* default */][newState](dimensions, __innerEl);
   };
 
-  var updateTick = __WEBPACK_IMPORTED_MODULE_0__rAFScrollWrapper_js__["a" /* default */](function () {
-    var dimensions = calculateDimensions();
-    var transition = findTransition(__state, dimensions);
+  var needUpdateSidebarStyles = function needUpdateSidebarStyles(dimensions) {
+    return __lastDimensions.wayHeight - dimensions.wayHeight !== 0 || __lastDimensions.innerHeight - dimensions.innerHeight !== 0;
+  };
 
-    if (transition) {
-      performTransition(transition, dimensions);
-    }
-
-    if (__lastDimensions.wayHeight - dimensions.wayHeight !== 0 || __lastDimensions.innerHeight - dimensions.innerHeight !== 0) updateSidebarStyles(dimensions);
-
-    __lastDimensions = dimensions;
-  });
+  var calculateScrollDirection = function calculateScrollDirection(viewportTop) {
+    return __lastDimensions.viewportTop < viewportTop ? 'down' : __lastDimensions.viewportTop > viewportTop ? 'up' : 'notChanged';
+  };
 
   var calculateDimensions = function calculateDimensions() {
     var viewportTop = window.pageYOffset;
@@ -161,10 +144,7 @@ function StickySidebar(sidebarEl, props) {
     var startPoint = sidebarElRect.top + viewportTop;
     var finishPoint = relativeElRect.bottom + viewportTop;
 
-    var scrollDirection = 'notChanged';
-
-    scrollDirection = __lastDimensions.viewportTop < viewportTop ? 'down' : scrollDirection;
-    scrollDirection = __lastDimensions.viewportTop > viewportTop ? 'up' : scrollDirection;
+    var scrollDirection = calculateScrollDirection(viewportTop);
 
     return {
       startPoint: startPoint,
@@ -184,11 +164,26 @@ function StickySidebar(sidebarEl, props) {
     };
   };
 
-  var updateSidebarStyles = function updateSidebarStyles(d) {
-    var height = d.wayHeight > d.innerHeight ? d.wayHeight : d.innerHeight;
+  var updateSidebarStyles = function updateSidebarStyles(dimensions) {
+    var height = dimensions.wayHeight > dimensions.innerHeight ? dimensions.wayHeight : dimensions.innerHeight;
 
     __sidebarEl.style.height = height + 'px';
   };
+
+  var updateTick = Object(__WEBPACK_IMPORTED_MODULE_0__utils_rAFScrollWrapper_js__["a" /* default */])(function () {
+    var dimensions = calculateDimensions();
+    var transition = findTransition(__state, dimensions);
+
+    if (transition) {
+      performTransition(transition, dimensions);
+    }
+
+    if (needUpdateSidebarStyles(dimensions)) {
+      updateSidebarStyles(dimensions);
+    }
+
+    __lastDimensions = dimensions;
+  });
 
   var forceUpdate = function forceUpdate() {
     updateTick();
@@ -204,7 +199,9 @@ function StickySidebar(sidebarEl, props) {
       var dimensions = calculateDimensions();
       var transition = findTransition(__state, dimensions);
 
-      if (transition) performTransition(transition, dimensions);
+      if (transition) {
+        performTransition(transition, dimensions);
+      }
 
       updateSidebarStyles(dimensions);
 
