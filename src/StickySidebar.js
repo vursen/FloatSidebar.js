@@ -4,7 +4,10 @@ import TRANSITIONS  from './constants/transitions.js';
 import STATE_STYLES from './constants/stateStyles.js';
 
 function StickySidebar(sidebarEl, props) {
-  props = {
+  let __state = 'START';
+  let __lastDimensions = {};
+
+  const __props = {
     topSpacing: 0,
     bottomSpacing: 0,
     relativeEl: null,
@@ -12,12 +15,9 @@ function StickySidebar(sidebarEl, props) {
     ...props,
   };
 
-  let __state = 'START';
-  let __lastDimensions = {};
-
-  let __sidebarEl  = sidebarEl;
-  let __innerEl    = props.innerEl;
-  let __relativeEl = props.relativeEl;
+  const __sidebarEl  = sidebarEl;
+  const __innerEl    = __props.innerEl;
+  const __relativeEl = __props.relativeEl;
 
   const findTransition = (state, dimensions) => {
     return TRANSITIONS[state].find(({ cond }) => (
@@ -36,12 +36,12 @@ function StickySidebar(sidebarEl, props) {
     __lastDimensions.innerHeight - dimensions.innerHeight !== 0
   );
 
-  const calculateScrollDirection = (viewportTop) => (
+  const computeScrollDirection = (viewportTop) => (
     __lastDimensions.viewportTop < viewportTop ? 'down' :
     __lastDimensions.viewportTop > viewportTop ? 'up'   : 'notChanged'
   );
 
-  const calculateDimensions = () => {
+  const computeDimensions = () => {
     const viewportTop       = window.pageYOffset;
     const viewportHeight    = window.innerHeight;
 
@@ -56,7 +56,7 @@ function StickySidebar(sidebarEl, props) {
     const startPoint  = sidebarElRect.top     + viewportTop;
     const finishPoint = relativeElRect.bottom + viewportTop;
 
-    const scrollDirection = calculateScrollDirection(viewportTop);
+    const scrollDirection = computeScrollDirection(viewportTop);
 
     return {
       startPoint:           startPoint,
@@ -65,14 +65,14 @@ function StickySidebar(sidebarEl, props) {
       innerHeight:          innerHeight,
       innerOffsetTop:       innerOffsetTop,
       innerOffsetBottom:    innerOffsetBottom,
-      isInnerFitsViewport:  innerHeight + props.topSpacing + props.bottomSpacing < viewportHeight,
+      isInnerFitsViewport:  innerHeight + __props.topSpacing + __props.bottomSpacing < viewportHeight,
       isInnerFitsContainer: innerHeight < relativeElRect.height,
       viewportTop:          viewportTop,
       viewportBottom:       viewportTop + viewportHeight,
       viewportHeight:       viewportHeight,
       scrollDirection:      scrollDirection,
-      topSpacing:           props.topSpacing,
-      bottomSpacing:        props.bottomSpacing,
+      topSpacing:           __props.topSpacing,
+      bottomSpacing:        __props.bottomSpacing,
     };
   };
 
@@ -85,7 +85,7 @@ function StickySidebar(sidebarEl, props) {
   };
 
   const updateTick = rAFScrollWrapper(() => {
-    const dimensions = calculateDimensions();
+    const dimensions = computeDimensions();
     const transition = findTransition(__state, dimensions);
 
     if (transition) {
@@ -109,7 +109,7 @@ function StickySidebar(sidebarEl, props) {
   }
 
   const init = () => requestAnimationFrame(() => {
-    const dimensions = calculateDimensions();
+    const dimensions = computeDimensions();
     const transition = findTransition(__state, dimensions);
 
     if (transition) {

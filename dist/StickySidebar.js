@@ -90,19 +90,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 function StickySidebar(sidebarEl, props) {
-  props = _extends({
+  var __state = 'START';
+  var __lastDimensions = {};
+
+  var __props = _extends({
     topSpacing: 0,
     bottomSpacing: 0,
     relativeEl: null,
     innerEl: null
   }, props);
 
-  var __state = 'START';
-  var __lastDimensions = {};
-
   var __sidebarEl = sidebarEl;
-  var __innerEl = props.innerEl;
-  var __relativeEl = props.relativeEl;
+  var __innerEl = __props.innerEl;
+  var __relativeEl = __props.relativeEl;
 
   var findTransition = function findTransition(state, dimensions) {
     return __WEBPACK_IMPORTED_MODULE_1__constants_transitions_js__["a" /* default */][state].find(function (_ref) {
@@ -125,11 +125,11 @@ function StickySidebar(sidebarEl, props) {
     return __lastDimensions.wayHeight - dimensions.wayHeight !== 0 || __lastDimensions.innerHeight - dimensions.innerHeight !== 0;
   };
 
-  var calculateScrollDirection = function calculateScrollDirection(viewportTop) {
+  var computeScrollDirection = function computeScrollDirection(viewportTop) {
     return __lastDimensions.viewportTop < viewportTop ? 'down' : __lastDimensions.viewportTop > viewportTop ? 'up' : 'notChanged';
   };
 
-  var calculateDimensions = function calculateDimensions() {
+  var computeDimensions = function computeDimensions() {
     var viewportTop = window.pageYOffset;
     var viewportHeight = window.innerHeight;
 
@@ -144,7 +144,7 @@ function StickySidebar(sidebarEl, props) {
     var startPoint = sidebarElRect.top + viewportTop;
     var finishPoint = relativeElRect.bottom + viewportTop;
 
-    var scrollDirection = calculateScrollDirection(viewportTop);
+    var scrollDirection = computeScrollDirection(viewportTop);
 
     return {
       startPoint: startPoint,
@@ -153,14 +153,14 @@ function StickySidebar(sidebarEl, props) {
       innerHeight: innerHeight,
       innerOffsetTop: innerOffsetTop,
       innerOffsetBottom: innerOffsetBottom,
-      isInnerFitsViewport: innerHeight + props.topSpacing + props.bottomSpacing < viewportHeight,
+      isInnerFitsViewport: innerHeight + __props.topSpacing + __props.bottomSpacing < viewportHeight,
       isInnerFitsContainer: innerHeight < relativeElRect.height,
       viewportTop: viewportTop,
       viewportBottom: viewportTop + viewportHeight,
       viewportHeight: viewportHeight,
       scrollDirection: scrollDirection,
-      topSpacing: props.topSpacing,
-      bottomSpacing: props.bottomSpacing
+      topSpacing: __props.topSpacing,
+      bottomSpacing: __props.bottomSpacing
     };
   };
 
@@ -171,7 +171,7 @@ function StickySidebar(sidebarEl, props) {
   };
 
   var updateTick = Object(__WEBPACK_IMPORTED_MODULE_0__utils_rAFScrollWrapper_js__["a" /* default */])(function () {
-    var dimensions = calculateDimensions();
+    var dimensions = computeDimensions();
     var transition = findTransition(__state, dimensions);
 
     if (transition) {
@@ -196,7 +196,7 @@ function StickySidebar(sidebarEl, props) {
 
   var init = function init() {
     return requestAnimationFrame(function () {
-      var dimensions = calculateDimensions();
+      var dimensions = computeDimensions();
       var transition = findTransition(__state, dimensions);
 
       if (transition) {
