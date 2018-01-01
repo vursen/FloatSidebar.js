@@ -1,0 +1,30 @@
+{
+  "name": "float-sidebar",
+  "description": "Lightweight, vanilla javascript library for making smart float sidebars",
+  "version": "1.0.1",
+  "main": "./dist/float-sidebar.min.js",
+  "module": "./src/index.js",
+  "devDependencies": {
+    "babel-core": "6.26.0",
+    "babel-loader": "7.1.2",
+    "babel-plugin-transform-object-assign": "6.22.0",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-preset-es2015": "6.24.1",
+    "uglifyjs-webpack-plugin": "^1.1.6",
+    "webpack": "3.10.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vursen/FloatSidebar.js.git"
+  },
+  "author": "Sergey Vinogradov",
+  "email": "mr.vursen@gmail.com",
+  "license": "The MIT License (MIT)",
+  "bugs": {
+    "url": "https://github.com/vursen/FloatSidebar.js/issues"
+  },
+  "homepage": "https://github.com/vursen/FloatSidebar.js#readme"
+}
