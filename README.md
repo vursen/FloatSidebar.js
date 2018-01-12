@@ -56,7 +56,6 @@ const floatSidebar = FloatSidebar({
 #### sidebar
 
 Type: `Element`
-
 *required*
 
 Sidebar element
@@ -64,7 +63,6 @@ Sidebar element
 #### relative
 
 Type: `Element`
-
 *required*
 
 Sidebar relative element, e.g. main content
@@ -78,7 +76,6 @@ Sidebar inner element
 #### topSpacing
 
 Type: `Integer`
-
 Defaults: `0`
 
 Viewport top spacing when sidebar fixed
@@ -86,13 +83,9 @@ Viewport top spacing when sidebar fixed
 #### bottomSpacing
 
 Type: `Integer`
-
 Defaults: `0`
 
 Viewport bottom spacing when sidebar fixed
-
-
-
 
 ## Instance API
 
