@@ -56,46 +56,50 @@ const floatSidebar = FloatSidebar({
 #### sidebar
 
 Type: `Element`
-*required*
 
-Sidebar element
+Required
+
+*Sidebar element*
 
 #### relative
 
 Type: `Element`
-*required*
 
-Sidebar relative element, e.g. main content
+Required
+
+*Sidebar relative element, e.g. main content*
 
 #### sidebarInner
 
 Defaults: `first element child of sidebar element`
 
-Sidebar inner element
+*Sidebar inner element*
 
 #### topSpacing
 
 Type: `Integer`
+
 Defaults: `0`
 
-Viewport top spacing when sidebar fixed
+*Viewport top spacing when sidebar fixed*
 
 #### bottomSpacing
 
 Type: `Integer`
+
 Defaults: `0`
 
-Viewport bottom spacing when sidebar fixed
+*Viewport bottom spacing when sidebar fixed*
 
 ## Instance API
 
 #### forceUpdate()
 
-Force recalculate and update sidebar position
+*Force recalculate and update sidebar position*
 
 #### destroy()
 
-destroy plugin (doesn't delete DOM elements)
+*destroy plugin (doesn't delete DOM elements)*
 
 ## License
 
