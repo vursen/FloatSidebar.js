@@ -53,57 +53,56 @@ const floatSidebar = FloatSidebar({
 
 ## Options
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Type</th>
-    <th></th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td><strong>sidebar</strong></td>
-    <td>Element</td>
-    <td>required</td>
-    <td>Sidebar element</td>
-  </tr>
-  <tr>
-    <td><strong>relative</strong></td>
-    <td>Element</td>
-    <td>required</td>
-    <td>Sidebar relative element, e.g. main content</td>
-  </tr>
-  <tr>
-    <td><strong>sidebarInner</strong></td>
-    <td>Element</td>
-    <td></td>
-    <td>Sidebar inner element. <em>Defaults: first element child of sidebar element</em></td>
-  </tr>
-  <tr>
-    <td><strong>topSpacing</strong></td>
-    <td>Integer</td>
-    <td></td>
-    <td>Viewport top spacing when sidebar fixed. <em>Defaults: 0</em></td>
-  </tr>
-  <tr>
-    <td><strong>bottomSpacing</strong></td>
-    <td>Integer</td>
-    <td></td>
-    <td>Viewport bottom spacing when sidebar fixed. <em>Defaults: 0</em></td>
-  </tr>
-</table>
+#### sidebar
 
-## Instance methods
+Type: `Element`
 
-<table>
-  <tr>
-    <td><strong>forceUpdate()</strong></td>
-    <td>force recalculate and update sidebar position</td>
-  </tr>
-  <tr>
-    <td><strong>destroy()</strong></td>
-    <td>destroy plugin (doesn't delete DOM elements)</td>
-  </tr>
-</table>
+*required*
+
+Sidebar element
+
+#### relative
+
+Type: `Element`
+
+*required*
+
+Sidebar relative element, e.g. main content
+
+#### sidebarInner
+
+Defaults: `first element child of sidebar element`
+
+Sidebar inner element
+
+#### topSpacing
+
+Type: `Integer`
+
+Defaults: `0`
+
+Viewport top spacing when sidebar fixed
+
+#### bottomSpacing
+
+Type: `Integer`
+
+Defaults: `0`
+
+Viewport bottom spacing when sidebar fixed
+
+
+
+
+## Instance API
+
+#### forceUpdate()
+
+Force recalculate and update sidebar position
+
+#### destroy()
+
+destroy plugin (doesn't delete DOM elements)
 
 ## License
 
