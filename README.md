@@ -12,11 +12,9 @@
 ```bash
 npm install float-sidebar
 ```
-*or*
 ```bash
 yarn add float-sidebar
 ```
-*or*
 ```html
 <script src="./path/to/float-sidebar.min.js"></script>
 ```
