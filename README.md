@@ -1,11 +1,9 @@
 # FloatSidebar.js
 [![NPM version](https://img.shields.io/npm/v/float-sidebar.svg?style=flat)](https://www.npmjs.org/package/float-sidebar)
 
-> Lightweight (2kb gzipped), vanilla javascript plugin for making smart float sidebars.
+> Lightweight (2kb gzipped), vanilla javascript plugin for making smart float sidebars
 
-## Example
-
-[JSFiddle](https://jsfiddle.net/vursen/cj4erfnj)
+[Demo](https://jsfiddle.net/vursen/cj4erfnj)
 
 ## Install
 
