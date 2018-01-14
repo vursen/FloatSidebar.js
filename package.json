@@ -1,7 +1,7 @@
 {
   "name": "float-sidebar",
   "description": "Lightweight, vanilla javascript library for making smart float sidebars",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./dist/float-sidebar.min.js",
   "module": "./src/index.js",
   "devDependencies": {
