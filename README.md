@@ -45,6 +45,14 @@ const floatSidebar = FloatSidebar({
   topSpacing: 20,
   bottomSpacing: 20
 });
+
+// ...
+
+floadSidebar.forceUpdate();
+
+// ...
+
+floatSidebar.destroy();
 ```
 
 ## Options
