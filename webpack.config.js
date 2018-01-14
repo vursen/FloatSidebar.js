@@ -1,15 +1,25 @@
 const webpack = require('webpack');
 const path    = require('path');
+const pkg     = require('./package.json');
 
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
+const banner = [
+  `${pkg.name} - ${pkg.description}`,
+  `@version v${pkg.version}`,
+  `@link ${pkg.homepage}`,
+  `@author ${pkg.author}`,
+  `@license ${pkg.license}`,
+].join('\n')
 
 module.exports = {
   entry: {
-    index: path.resolve(__dirname, 'src/index.js')
+    'float-sidebar':     path.resolve(__dirname, 'src/index.js'),
+    'float-sidebar.min': path.resolve(__dirname, 'src/index.js')
   },
 
   output: {
-    filename: 'float-sidebar.min.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
     libraryTarget: 'umd',
     libraryExport: 'default',
@@ -28,8 +38,9 @@ module.exports = {
   },
 
   plugins: [
-    ['production', new UglifyJsPlugin()]
+    new UglifyJsPlugin({
+      include: /\.min\.js$/,
+    }),
+    new webpack.BannerPlugin(banner)
   ]
-    .filter(([env, plugin]) => process.env.NODE_ENV == env)
-    .map   (([env, plugin]) => plugin)
 }
