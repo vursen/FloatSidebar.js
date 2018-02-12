@@ -3,7 +3,7 @@
   "description": "Lightweight, vanilla javascript library for making smart float sidebars",
   "version": "1.0.3",
   "main": "./dist/float-sidebar.min.js",
-  "module": "./src/index.js",
+  "module": "./dist/float-sidebar.js",
   "devDependencies": {
     "babel-core": "6.26.0",
     "babel-loader": "7.1.2",
