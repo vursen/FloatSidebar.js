@@ -71,8 +71,16 @@ Required
 
 Sidebar relative element, e.g. main content
 
+#### viewport
+
+Type: `Element`<br/>
+Defaults: `window`
+
+Sidebar element
+
 #### sidebarInner
 
+Type: `Element`<br/>
 Defaults: `first element child of sidebar element`
 
 Sidebar inner element
