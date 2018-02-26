@@ -6,30 +6,23 @@ import createFSM               from './utils/createFSM';
 import createDimensionObserver from './utils/createDimensionObserver';
 
 function FloatSidebar(options) {
-  const $sideOuter = options.sidebar;
-  const $sideInner = options.sidebarInner || $sideOuter.firstElementChild;
-  const $relative  = options.relative;
+  let $viewport  = options.viewport || window;
+  let $sideOuter = options.sidebar;
+  let $sideInner = options.sidebarInner || $sideOuter.firstElementChild;
+  let $relative  = options.relative;
 
-  const topSpacing    = options.topSpacing    || 0;
-  const bottomSpacing = options.bottomSpacing || 0;
+  let topSpacing    = options.topSpacing    || 0;
+  let bottomSpacing = options.bottomSpacing || 0;
 
-  const fsm = createFSM({
+  let fsm = createFSM({
     actions:      fsmActions,
     transitions:  fsmTransitions,
     initialState: fsmStates.STATE_START
   });
 
-  const dimensionObserver = createDimensionObserver(
-    {
-      $sideOuter,
-      $sideInner,
-      $relative,
-      topSpacing,
-      bottomSpacing
-    },
-
+  let dimensionObserver = createDimensionObserver(
     (prevDimensions, dimensions) => {
-      const transition = fsm.findTransitionFor(dimensions);
+      let transition = fsm.findTransitionFor(dimensions);
 
       if (transition) {
         fsm.performTransition(transition)(dimensions, {
@@ -40,11 +33,20 @@ function FloatSidebar(options) {
       }
 
       updateSideOuterHeight(prevDimensions, dimensions);
+    },
+
+    {
+      $viewport,
+      $sideOuter,
+      $sideInner,
+      $relative,
+      topSpacing,
+      bottomSpacing
     }
   )
 
-  const updateSideOuterHeight = (prevDimensions, dimensions) => {
-    const isHeightChanged = Math.abs(
+  let updateSideOuterHeight = (prevDimensions, dimensions) => {
+    let isHeightChanged = Math.abs(
       (prevDimensions.sideOuterHeight || 0) - dimensions.sideOuterHeight
     ) >= 1;
 
@@ -53,15 +55,15 @@ function FloatSidebar(options) {
     }
   }
 
-  const forceUpdate = () => {
+  let forceUpdate = () => {
     dimensionObserver.tick();
   }
 
-  const destroy = () => {
+  let destroy = () => {
     dimensionObserver.stop();
   }
 
-  const init = () => {
+  let init = () => {
     $sideOuter.style.willChange = 'height';
     $sideInner.style.width      = 'inherit';
     $sideInner.style.transform  = 'translateZ(0)';

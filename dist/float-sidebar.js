@@ -115,6 +115,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 function FloatSidebar(options) {
+  var $viewport = options.viewport || window;
   var $sideOuter = options.sidebar;
   var $sideInner = options.sidebarInner || $sideOuter.firstElementChild;
   var $relative = options.relative;
@@ -128,13 +129,7 @@ function FloatSidebar(options) {
     initialState: __WEBPACK_IMPORTED_MODULE_2__constants_fsmStates__["c" /* STATE_START */]
   });
 
-  var dimensionObserver = Object(__WEBPACK_IMPORTED_MODULE_4__utils_createDimensionObserver__["a" /* default */])({
-    $sideOuter: $sideOuter,
-    $sideInner: $sideInner,
-    $relative: $relative,
-    topSpacing: topSpacing,
-    bottomSpacing: bottomSpacing
-  }, function (prevDimensions, dimensions) {
+  var dimensionObserver = Object(__WEBPACK_IMPORTED_MODULE_4__utils_createDimensionObserver__["a" /* default */])(function (prevDimensions, dimensions) {
     var transition = fsm.findTransitionFor(dimensions);
 
     if (transition) {
@@ -146,6 +141,13 @@ function FloatSidebar(options) {
     }
 
     updateSideOuterHeight(prevDimensions, dimensions);
+  }, {
+    $viewport: $viewport,
+    $sideOuter: $sideOuter,
+    $sideInner: $sideInner,
+    $relative: $relative,
+    topSpacing: topSpacing,
+    bottomSpacing: bottomSpacing
   });
 
   var updateSideOuterHeight = function updateSideOuterHeight(prevDimensions, dimensions) {
@@ -376,9 +378,9 @@ function createFSM(_ref) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__rAFThrottle__ = __webpack_require__(6);
 
 
-var computeViewportDimensions = function computeViewportDimensions() {
-  var height = window.innerHeight;
-  var top = window.pageYOffset;
+var computeViewportDimensions = function computeViewportDimensions($viewport) {
+  var height = $viewport.clientHeight || $viewport.innerHeight;
+  var top = $viewport.scrollTop || $viewport.pageYOffset;
   var bottom = top + height;
 
   return { top: top, bottom: bottom, height: height };
@@ -394,10 +396,11 @@ var computeElementDimensions = function computeElementDimensions($element, viewp
   };
 };
 
-function createDimensionObserver(_ref, callback) {
-  var $sideInner = _ref.$sideInner,
-      $sideOuter = _ref.$sideOuter,
+function createDimensionObserver(onChange, _ref) {
+  var $viewport = _ref.$viewport,
       $relative = _ref.$relative,
+      $sideInner = _ref.$sideInner,
+      $sideOuter = _ref.$sideOuter,
       topSpacing = _ref.topSpacing,
       bottomSpacing = _ref.bottomSpacing;
 
@@ -408,70 +411,61 @@ function createDimensionObserver(_ref, callback) {
   };
 
   var computeDimensions = function computeDimensions() {
-    var _computeViewportDimen = computeViewportDimensions(),
-        viewportTop = _computeViewportDimen.top,
-        viewportBottom = _computeViewportDimen.bottom,
-        viewportHeight = _computeViewportDimen.height;
+    var dim$viewport = computeViewportDimensions($viewport);
+    var dim$sideInner = computeElementDimensions($sideInner, dim$viewport.top);
+    var dim$sideOuter = computeElementDimensions($sideOuter, dim$viewport.top);
+    var dim$relative = computeElementDimensions($relative, dim$viewport.top);
 
-    var _computeElementDimens = computeElementDimensions($sideInner, viewportTop),
-        sideInnerTop = _computeElementDimens.top,
-        sideInnerBottom = _computeElementDimens.bottom,
-        sideInnerHeight = _computeElementDimens.height;
+    var scrollDirection = computeScrollDirection(dim$viewport.top);
 
-    var _computeElementDimens2 = computeElementDimensions($sideOuter, viewportTop),
-        sideOuterTop = _computeElementDimens2.top,
-        sideOuterBottom = _computeElementDimens2.bottom;
+    var startPoint = dim$sideOuter.top;
+    var finishPoint = dim$relative.bottom;
 
-    var _computeElementDimens3 = computeElementDimensions($relative, viewportTop),
-        relativeTop = _computeElementDimens3.top,
-        relativeBottom = _computeElementDimens3.bottom;
-
-    var scrollDirection = computeScrollDirection(viewportTop);
-
-    var startPoint = sideOuterTop;
-    var finishPoint = relativeBottom;
     var pathHeight = finishPoint - startPoint;
 
-    var isSideInnerFitsViewport = sideInnerHeight + topSpacing + bottomSpacing < viewportHeight;
-    var isSideInnerFitsPath = sideInnerHeight < pathHeight;
+    var isSideInnerFitsViewport = dim$sideInner.height + topSpacing + bottomSpacing < dim$viewport.height;
+    var isSideInnerFitsPath = dim$sideInner.height < pathHeight;
 
-    var sideOuterHeight = Math.max(sideInnerHeight, pathHeight);
+    var sideOuterHeight = Math.max(dim$sideInner.height, pathHeight);
 
     return {
       startPoint: startPoint,
       finishPoint: finishPoint,
-      viewportTop: viewportTop,
-      viewportBottom: viewportBottom,
-      sideOuterHeight: sideOuterHeight,
-      sideInnerTop: sideInnerTop,
-      sideInnerBottom: sideInnerBottom,
-      sideInnerHeight: sideInnerHeight,
-      isSideInnerFitsViewport: isSideInnerFitsViewport,
-      isSideInnerFitsPath: isSideInnerFitsPath,
-      scrollDirection: scrollDirection,
       topSpacing: topSpacing,
-      bottomSpacing: bottomSpacing
+      bottomSpacing: bottomSpacing,
+      scrollDirection: scrollDirection,
+      isSideInnerFitsPath: isSideInnerFitsPath,
+      isSideInnerFitsViewport: isSideInnerFitsViewport,
+
+      sideOuterHeight: sideOuterHeight,
+
+      viewportTop: dim$viewport.top,
+      viewportBottom: dim$viewport.bottom,
+
+      sideInnerTop: dim$sideInner.top,
+      sideInnerBottom: dim$sideInner.bottom,
+      sideInnerHeight: dim$sideInner.height
     };
   };
 
   var tick = Object(__WEBPACK_IMPORTED_MODULE_0__rAFThrottle__["a" /* default */])(function () {
     var dimensions = computeDimensions();
 
-    callback(prevDimensions, dimensions);
+    onChange(prevDimensions, dimensions);
 
     prevDimensions = dimensions;
   });
 
   var start = function start() {
-    window.addEventListener('scroll', tick);
-    window.addEventListener('resize', tick);
+    $viewport.addEventListener('scroll', tick);
+    $viewport.addEventListener('resize', tick);
 
     tick();
   };
 
   var stop = function stop() {
-    window.removeEventListener('scroll', tick);
-    window.removeEventListener('resize', tick);
+    $viewport.removeEventListener('scroll', tick);
+    $viewport.removeEventListener('resize', tick);
   };
 
   return { start: start, stop: stop, tick: tick };

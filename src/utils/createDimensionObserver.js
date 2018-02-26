@@ -1,15 +1,15 @@
 import rAFThrottle from './rAFThrottle';
 
-const computeViewportDimensions = () => {
-  const height = window.innerHeight;
-  const top    = window.pageYOffset;
-  const bottom = top + height;
+let computeViewportDimensions = ($viewport) => {
+  let height = $viewport.clientHeight || $viewport.innerHeight;
+  let top    = $viewport.scrollTop    || $viewport.pageYOffset;
+  let bottom = top + height;
 
   return { top, bottom, height }
 }
 
-const computeElementDimensions = ($element, viewportTop) => {
-  const rect = $element.getBoundingClientRect();
+let computeElementDimensions = ($element, viewportTop) => {
+  let rect = $element.getBoundingClientRect();
 
   return {
     top:    rect.top    + viewportTop,
@@ -18,89 +18,77 @@ const computeElementDimensions = ($element, viewportTop) => {
   }
 }
 
-function createDimensionObserver({
+function createDimensionObserver(onChange, {
+  $viewport,
+  $relative,
   $sideInner,
   $sideOuter,
-  $relative,
   topSpacing,
   bottomSpacing
-}, callback) {
+}) {
   let prevDimensions = {};
 
-  const computeScrollDirection = (viewportTop) => (
+  let computeScrollDirection = (viewportTop) => (
     prevDimensions.viewportTop < viewportTop ? 'down' :
     prevDimensions.viewportTop > viewportTop ? 'up'   : 'notChanged'
   )
 
-  const computeDimensions = () => {
-    const {
-      top:    viewportTop,
-      bottom: viewportBottom,
-      height: viewportHeight
-    } = computeViewportDimensions();
+  let computeDimensions = () => {
+    let dim$viewport  = computeViewportDimensions($viewport);
+    let dim$sideInner = computeElementDimensions($sideInner, dim$viewport.top);
+    let dim$sideOuter = computeElementDimensions($sideOuter, dim$viewport.top);
+    let dim$relative  = computeElementDimensions($relative,  dim$viewport.top);
 
-    const {
-      top:    sideInnerTop,
-      bottom: sideInnerBottom,
-      height: sideInnerHeight
-    } = computeElementDimensions($sideInner, viewportTop);
+    let scrollDirection = computeScrollDirection(dim$viewport.top);
 
-    const {
-      top:    sideOuterTop,
-      bottom: sideOuterBottom
-    } = computeElementDimensions($sideOuter, viewportTop);
+    let startPoint  = dim$sideOuter.top;
+    let finishPoint = dim$relative.bottom;
 
-    const {
-      top:    relativeTop,
-      bottom: relativeBottom
-    } = computeElementDimensions($relative, viewportTop);
+    let pathHeight  = finishPoint - startPoint;
 
-    const scrollDirection = computeScrollDirection(viewportTop);
+    let isSideInnerFitsViewport = dim$sideInner.height + topSpacing + bottomSpacing < dim$viewport.height;
+    let isSideInnerFitsPath     = dim$sideInner.height < pathHeight;
 
-    const startPoint  = sideOuterTop;
-    const finishPoint = relativeBottom;
-    const pathHeight  = finishPoint - startPoint;
-
-    const isSideInnerFitsViewport = sideInnerHeight + topSpacing + bottomSpacing < viewportHeight;
-    const isSideInnerFitsPath     = sideInnerHeight < pathHeight;
-
-    const sideOuterHeight = Math.max(sideInnerHeight, pathHeight);
+    let sideOuterHeight = Math.max(dim$sideInner.height, pathHeight);
 
     return {
       startPoint,
       finishPoint,
-      viewportTop,
-      viewportBottom,
-      sideOuterHeight,
-      sideInnerTop,
-      sideInnerBottom,
-      sideInnerHeight,
-      isSideInnerFitsViewport,
-      isSideInnerFitsPath,
-      scrollDirection,
       topSpacing,
-      bottomSpacing
+      bottomSpacing,
+      scrollDirection,
+      isSideInnerFitsPath,
+      isSideInnerFitsViewport,
+
+      sideOuterHeight: sideOuterHeight,
+
+      viewportTop:    dim$viewport.top,
+      viewportBottom: dim$viewport.bottom,
+
+      sideInnerTop:    dim$sideInner.top,
+      sideInnerBottom: dim$sideInner.bottom,
+      sideInnerHeight: dim$sideInner.height,
     }
   }
 
-  const tick = rAFThrottle(() => {
-    const dimensions = computeDimensions();
+  let tick = rAFThrottle(() => {
+    let dimensions = computeDimensions();
 
-    callback(prevDimensions, dimensions);
+    onChange(prevDimensions, dimensions);
 
     prevDimensions = dimensions;
   });
 
-  const start = () => {
-    window.addEventListener('scroll', tick);
-    window.addEventListener('resize', tick);
+  let start = () => {
+    $viewport.addEventListener('scroll', tick);
+    $viewport.addEventListener('resize', tick);
 
     tick();
   }
 
-  const stop = () => {
-    window.removeEventListener('scroll', tick);
-    window.removeEventListener('resize', tick);
+  let stop = () => {
+    $viewport.removeEventListener('scroll', tick);
+    $viewport.removeEventListener('resize', tick);
   }
 
   return { start, stop, tick };
