@@ -76,7 +76,7 @@ Sidebar relative element, e.g. main content
 Type: `Element`<br/>
 Defaults: `window`
 
-Sidebar element
+Viewport element
 
 #### sidebarInner
 
