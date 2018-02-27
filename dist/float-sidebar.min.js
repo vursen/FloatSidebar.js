@@ -1,6 +1,6 @@
 /*!
  * float-sidebar - Lightweight, vanilla javascript library for making smart float sidebars
- * @version v1.0.5
+ * @version v1.1.0
  * @link https://github.com/vursen/FloatSidebar.js
  * @author Sergey Vinogradov
  * @license The MIT License (MIT)
