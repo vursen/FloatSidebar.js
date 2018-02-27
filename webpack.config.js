@@ -2,8 +2,6 @@ const webpack = require('webpack');
 const path    = require('path');
 const pkg     = require('./package.json');
 
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-
 const banner = [
   `${pkg.name} - ${pkg.description}`,
   `@version v${pkg.version}`,
@@ -13,9 +11,12 @@ const banner = [
 ].join('\n')
 
 module.exports = {
+  mode: 'production',
+
+  devtool: 'source-map',
+
   entry: {
-    'float-sidebar':     path.resolve(__dirname, 'src/index.js'),
-    'float-sidebar.min': path.resolve(__dirname, 'src/index.js')
+    'float-sidebar': path.resolve(__dirname, 'src/index.js'),
   },
 
   output: {
@@ -38,9 +39,6 @@ module.exports = {
   },
 
   plugins: [
-    new UglifyJsPlugin({
-      include: /\.min\.js$/,
-    }),
     new webpack.BannerPlugin(banner)
   ]
 }
