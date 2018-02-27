@@ -1,2 +1,463 @@
-!function(t,n){"object"==typeof exports&&"object"==typeof module?module.exports=n():"function"==typeof define&&define.amd?define([],n):"object"==typeof exports?exports.FloatSidebar=n():t.FloatSidebar=n()}(window,function(){return function(t){var n={};function e(i){if(n[i])return n[i].exports;var o=n[i]={i:i,l:!1,exports:{}};return t[i].call(o.exports,o,o.exports,e),o.l=!0,o.exports}return e.m=t,e.c=n,e.d=function(t,n,i){e.o(t,n)||Object.defineProperty(t,n,{configurable:!1,enumerable:!0,get:i})},e.r=function(t){Object.defineProperty(t,"__esModule",{value:!0})},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},e.p="",e(e.s=0)}([function(t,n,e){"use strict";e.r(n);var i,o="START",r="TOP_FIXED",s="UNFIXED",u="BOTTOM_FIXED",a="FINISH";function p(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}var c,f=(p(i={},o,[{to:a,when:function(t){return[!0===t.isSideInnerFitsPath,t.viewportTop+t.sideInnerHeight>=t.finishPoint]}},{to:u,when:function(t){return[!0===t.isSideInnerFitsPath,!1===t.isSideInnerFitsViewport,t.viewportBottom>=t.sideInnerBottom+t.bottomSpacing]}},{to:r,when:function(t){return[!0===t.isSideInnerFitsPath,!0===t.isSideInnerFitsViewport,t.viewportTop>=t.startPoint-t.topSpacing]}}]),p(i,r,[{to:o,when:function(t){return[!1===t.isSideInnerFitsPath]}},{to:o,when:function(t){return[t.viewportTop<=t.startPoint-t.topSpacing]}},{to:a,when:function(t){return[t.sideInnerBottom>=t.finishPoint]}},{to:s,when:function(t){return["down"===t.scrollDirection,!1===t.isSideInnerFitsViewport]}}]),p(i,s,[{to:o,when:function(t){return[!1===t.isSideInnerFitsPath]}},{to:r,when:function(t){return[t.viewportTop<=t.sideInnerTop-t.topSpacing]}},{to:r,when:function(t){return[!0===t.isSideInnerFitsViewport,t.viewportBottom>=t.sideInnerBottom+t.bottomSpacing]}},{to:u,when:function(t){return[!1===t.isSideInnerFitsViewport,t.viewportBottom>=t.sideInnerBottom+t.bottomSpacing]}}]),p(i,u,[{to:o,when:function(t){return[!1===t.isSideInnerFitsPath]}},{to:s,when:function(t){return["up"===t.scrollDirection]}},{to:r,when:function(t){return[!0===t.isSideInnerFitsViewport]}},{to:a,when:function(t){return[t.sideInnerBottom>=t.finishPoint]}}]),p(i,a,[{to:o,when:function(t){return[!1===t.isSideInnerFitsPath]}},{to:u,when:function(t){return[t.sideInnerBottom+t.bottomSpacing<=t.finishPoint,t.viewportBottom<=t.finishPoint]}},{to:r,when:function(t){return[t.viewportTop<=t.sideInnerTop-t.topSpacing]}}]),i);function d(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}var l=(d(c={},o,function(t,n){var e=n.$sideInner;e.style.position="absolute",e.style.top="0",e.style.bottom="auto"}),d(c,r,function(t,n){var e=n.$sideInner;e.style.position="fixed",e.style.top=t.topSpacing+"px",e.style.bottom="auto"}),d(c,s,function(t,n){var e=n.$sideInner;e.style.position="absolute",e.style.top=t.sideInnerTop-t.startPoint+"px",e.style.bottom="auto"}),d(c,u,function(t,n){var e=n.$sideInner;e.style.position="fixed",e.style.top="auto",e.style.bottom=t.bottomSpacing+"px"}),d(c,a,function(t,n){var e=n.$sideInner;e.style.position="absolute",e.style.top="auto",e.style.bottom="0"}),c);var h=function(t){var n=t.actions,e=t.transitions,i=t.initialState;return{findTransitionFor:function(){for(var t=arguments.length,n=Array(t),o=0;o<t;o++)n[o]=arguments[o];return e[i].find(function(t){return t.when.apply(void 0,n).every(function(t){return t})})},performTransition:function(t){var e=t.to;return function(){i=e,n[e].apply(n,arguments)}}}};var v=function(t){var n=void 0;return function(){n||(n=requestAnimationFrame(function(){n=null,t()}))}},w=function(t){var n=t.clientHeight||t.innerHeight,e=t.scrollTop||t.pageYOffset;return{top:e,bottom:e+n,height:n}},m=function(t,n){var e=t.getBoundingClientRect();return{top:e.top+n,bottom:e.bottom+n,height:e.height}};var g=function(t,n){var e=n.$viewport,i=n.$relative,o=n.$sideInner,r=n.$sideOuter,s=n.topSpacing,u=n.bottomSpacing,a={},p=function(){var t,n=w(e),p=m(o,n.top),c=m(r,n.top),f=m(i,n.top),d=(t=n.top,a.viewportTop<t?"down":a.viewportTop>t?"up":"notChanged"),l=c.top,h=f.bottom,v=h-l,g=p.height+s+u<n.height,b=p.height<v,I=Math.max(p.height,v);return{startPoint:l,finishPoint:h,topSpacing:s,bottomSpacing:u,scrollDirection:d,isSideInnerFitsPath:b,isSideInnerFitsViewport:g,sideOuterHeight:I,viewportTop:n.top,viewportBottom:n.bottom,sideInnerTop:p.top,sideInnerBottom:p.bottom,sideInnerHeight:p.height}},c=v(function(){var n=p();t(a,n),a=n});return{start:function(){e.addEventListener("scroll",c),e.addEventListener("resize",c),c()},stop:function(){e.removeEventListener("scroll",c),e.removeEventListener("resize",c)},tick:c}};n.default=function(t){var n=t.viewport||window,e=t.sidebar,i=t.sidebarInner||e.firstElementChild,r=t.relative,s=t.topSpacing||0,u=t.bottomSpacing||0,a=h({actions:l,transitions:f,initialState:o}),p=g(function(t,n){var o=a.findTransitionFor(n);o&&a.performTransition(o)(n,{$sideInner:i,$sideOuter:e,$relative:r}),c(t,n)},{$viewport:n,$sideOuter:e,$sideInner:i,$relative:r,topSpacing:s,bottomSpacing:u}),c=function(t,n){Math.abs((t.sideOuterHeight||0)-n.sideOuterHeight)>=1&&(e.style.height=n.sideOuterHeight+"px")};return requestAnimationFrame(function(){e.style.willChange="height",i.style.width="inherit",i.style.transform="translateZ(0)",i.style.willChange="transform",p.start()}),{forceUpdate:function(){p.tick()},destroy:function(){p.stop()}}}}]).default});
-//# sourceMappingURL=float-sidebar.js.map
+/*!
+ * float-sidebar - Lightweight, vanilla javascript library for making smart float sidebars
+ * @version v1.0.5
+ * @link https://github.com/vursen/FloatSidebar.js
+ * @author Sergey Vinogradov
+ * @license The MIT License (MIT)
+ */
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["FloatSidebar"] = factory();
+	else
+		root["FloatSidebar"] = factory();
+})(window, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+// CONCATENATED MODULE: ./src/constants/fsmStates.js
+var STATE_START = 'START';
+var STATE_TOP_FIXED = 'TOP_FIXED';
+var STATE_UNFIXED = 'UNFIXED';
+var STATE_BOTTOM_FIXED = 'BOTTOM_FIXED';
+var STATE_FINISH = 'FINISH';
+// CONCATENATED MODULE: ./src/constants/fsmTransitions.js
+var _STATE_START$STATE_TO;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+/* harmony default export */ var fsmTransitions = (_STATE_START$STATE_TO = {}, _defineProperty(_STATE_START$STATE_TO, STATE_START, [{
+  to: STATE_FINISH,
+  when: function when(d) {
+    return [d.isSideInnerFitsPath === true, d.viewportTop + d.sideInnerHeight >= d.finishPoint];
+  }
+}, {
+  to: STATE_BOTTOM_FIXED,
+  when: function when(d) {
+    return [d.isSideInnerFitsPath === true, d.isSideInnerFitsViewport === false, d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing];
+  }
+}, {
+  to: STATE_TOP_FIXED,
+  when: function when(d) {
+    return [d.isSideInnerFitsPath === true, d.isSideInnerFitsViewport === true, d.viewportTop >= d.startPoint - d.topSpacing];
+  }
+}]), _defineProperty(_STATE_START$STATE_TO, STATE_TOP_FIXED, [{
+  to: STATE_START,
+  when: function when(d) {
+    return [d.isSideInnerFitsPath === false];
+  }
+}, {
+  to: STATE_START,
+  when: function when(d) {
+    return [d.viewportTop <= d.startPoint - d.topSpacing];
+  }
+}, {
+  to: STATE_FINISH,
+  when: function when(d) {
+    return [d.sideInnerBottom >= d.finishPoint];
+  }
+}, {
+  to: STATE_UNFIXED,
+  when: function when(d) {
+    return [d.scrollDirection === 'down', d.isSideInnerFitsViewport === false];
+  }
+}]), _defineProperty(_STATE_START$STATE_TO, STATE_UNFIXED, [{
+  to: STATE_START,
+  when: function when(d) {
+    return [d.isSideInnerFitsPath === false];
+  }
+}, {
+  to: STATE_TOP_FIXED,
+  when: function when(d) {
+    return [d.viewportTop <= d.sideInnerTop - d.topSpacing];
+  }
+}, {
+  to: STATE_TOP_FIXED,
+  when: function when(d) {
+    return [d.isSideInnerFitsViewport === true, d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing];
+  }
+}, {
+  to: STATE_BOTTOM_FIXED,
+  when: function when(d) {
+    return [d.isSideInnerFitsViewport === false, d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing];
+  }
+}]), _defineProperty(_STATE_START$STATE_TO, STATE_BOTTOM_FIXED, [{
+  to: STATE_START,
+  when: function when(d) {
+    return [d.isSideInnerFitsPath === false];
+  }
+}, {
+  to: STATE_UNFIXED,
+  when: function when(d) {
+    return [d.scrollDirection === 'up'];
+  }
+}, {
+  to: STATE_TOP_FIXED,
+  when: function when(d) {
+    return [d.isSideInnerFitsViewport === true];
+  }
+}, {
+  to: STATE_FINISH,
+  when: function when(d) {
+    return [d.sideInnerBottom >= d.finishPoint];
+  }
+}]), _defineProperty(_STATE_START$STATE_TO, STATE_FINISH, [{
+  to: STATE_START,
+  when: function when(d) {
+    return [d.isSideInnerFitsPath === false];
+  }
+}, {
+  to: STATE_BOTTOM_FIXED,
+  when: function when(d) {
+    return [d.sideInnerBottom + d.bottomSpacing <= d.finishPoint, d.viewportBottom <= d.finishPoint];
+  }
+}, {
+  to: STATE_TOP_FIXED,
+  when: function when(d) {
+    return [d.viewportTop <= d.sideInnerTop - d.topSpacing];
+  }
+}]), _STATE_START$STATE_TO);
+// CONCATENATED MODULE: ./src/constants/fsmActions.js
+var fsmActions_STATE_START$STATE_TO;
+
+function fsmActions_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+/* harmony default export */ var fsmActions = (fsmActions_STATE_START$STATE_TO = {}, fsmActions_defineProperty(fsmActions_STATE_START$STATE_TO, STATE_START, function (d, _ref) {
+  var $sideInner = _ref.$sideInner;
+
+  $sideInner.style.position = 'absolute';
+  $sideInner.style.top = '0';
+  $sideInner.style.bottom = 'auto';
+}), fsmActions_defineProperty(fsmActions_STATE_START$STATE_TO, STATE_TOP_FIXED, function (d, _ref2) {
+  var $sideInner = _ref2.$sideInner;
+
+  $sideInner.style.position = 'fixed';
+  $sideInner.style.top = d.topSpacing + 'px';
+  $sideInner.style.bottom = 'auto';
+}), fsmActions_defineProperty(fsmActions_STATE_START$STATE_TO, STATE_UNFIXED, function (d, _ref3) {
+  var $sideInner = _ref3.$sideInner;
+
+  $sideInner.style.position = 'absolute';
+  $sideInner.style.top = d.sideInnerTop - d.startPoint + 'px';
+  $sideInner.style.bottom = 'auto';
+}), fsmActions_defineProperty(fsmActions_STATE_START$STATE_TO, STATE_BOTTOM_FIXED, function (d, _ref4) {
+  var $sideInner = _ref4.$sideInner;
+
+  $sideInner.style.position = 'fixed';
+  $sideInner.style.top = 'auto';
+  $sideInner.style.bottom = d.bottomSpacing + 'px';
+}), fsmActions_defineProperty(fsmActions_STATE_START$STATE_TO, STATE_FINISH, function (d, _ref5) {
+  var $sideInner = _ref5.$sideInner;
+
+  $sideInner.style.position = 'absolute';
+  $sideInner.style.top = 'auto';
+  $sideInner.style.bottom = '0';
+}), fsmActions_STATE_START$STATE_TO);
+// CONCATENATED MODULE: ./src/utils/createFSM.js
+function createFSM(_ref) {
+  var actions = _ref.actions,
+      transitions = _ref.transitions,
+      initialState = _ref.initialState;
+
+  var currentState = initialState;
+
+  var findTransitionFor = function findTransitionFor() {
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return transitions[currentState].find(function (_ref2) {
+      var when = _ref2.when;
+
+      return when.apply(undefined, args).every(function (condition) {
+        return condition;
+      });
+    });
+  };
+
+  var performTransition = function performTransition(_ref3) {
+    var newState = _ref3.to;
+    return function () {
+      currentState = newState;
+
+      actions[newState].apply(actions, arguments);
+    };
+  };
+
+  return { findTransitionFor: findTransitionFor, performTransition: performTransition };
+}
+
+/* harmony default export */ var utils_createFSM = (createFSM);
+// CONCATENATED MODULE: ./src/utils/rAFThrottle.js
+function rAFThrottle(callback) {
+  var requestId = void 0;
+
+  return function () {
+    if (!requestId) {
+      requestId = requestAnimationFrame(function () {
+        requestId = null;
+        callback();
+      });
+    }
+  };
+}
+
+/* harmony default export */ var utils_rAFThrottle = (rAFThrottle);
+// CONCATENATED MODULE: ./src/utils/createDimensionObserver.js
+
+
+var computeViewportDimensions = function computeViewportDimensions($viewport) {
+  var height = $viewport.clientHeight || $viewport.innerHeight;
+  var top = $viewport.scrollTop || $viewport.pageYOffset;
+  var bottom = top + height;
+
+  return { top: top, bottom: bottom, height: height };
+};
+
+var computeElementDimensions = function computeElementDimensions($element, viewportTop) {
+  var rect = $element.getBoundingClientRect();
+
+  return {
+    top: rect.top + viewportTop,
+    bottom: rect.bottom + viewportTop,
+    height: rect.height
+  };
+};
+
+function createDimensionObserver(onChange, _ref) {
+  var $viewport = _ref.$viewport,
+      $relative = _ref.$relative,
+      $sideInner = _ref.$sideInner,
+      $sideOuter = _ref.$sideOuter,
+      topSpacing = _ref.topSpacing,
+      bottomSpacing = _ref.bottomSpacing;
+
+  var prevDimensions = {};
+
+  var computeScrollDirection = function computeScrollDirection(viewportTop) {
+    return prevDimensions.viewportTop < viewportTop ? 'down' : prevDimensions.viewportTop > viewportTop ? 'up' : 'notChanged';
+  };
+
+  var computeDimensions = function computeDimensions() {
+    var dim$viewport = computeViewportDimensions($viewport);
+    var dim$sideInner = computeElementDimensions($sideInner, dim$viewport.top);
+    var dim$sideOuter = computeElementDimensions($sideOuter, dim$viewport.top);
+    var dim$relative = computeElementDimensions($relative, dim$viewport.top);
+
+    var scrollDirection = computeScrollDirection(dim$viewport.top);
+
+    var startPoint = dim$sideOuter.top;
+    var finishPoint = dim$relative.bottom;
+
+    var pathHeight = finishPoint - startPoint;
+
+    var isSideInnerFitsViewport = dim$sideInner.height + topSpacing + bottomSpacing < dim$viewport.height;
+    var isSideInnerFitsPath = dim$sideInner.height < pathHeight;
+
+    var sideOuterHeight = Math.max(dim$sideInner.height, pathHeight);
+
+    return {
+      startPoint: startPoint,
+      finishPoint: finishPoint,
+      topSpacing: topSpacing,
+      bottomSpacing: bottomSpacing,
+      scrollDirection: scrollDirection,
+      isSideInnerFitsPath: isSideInnerFitsPath,
+      isSideInnerFitsViewport: isSideInnerFitsViewport,
+
+      sideOuterHeight: sideOuterHeight,
+
+      viewportTop: dim$viewport.top,
+      viewportBottom: dim$viewport.bottom,
+
+      sideInnerTop: dim$sideInner.top,
+      sideInnerBottom: dim$sideInner.bottom,
+      sideInnerHeight: dim$sideInner.height
+    };
+  };
+
+  var tick = utils_rAFThrottle(function () {
+    var dimensions = computeDimensions();
+
+    onChange(prevDimensions, dimensions);
+
+    prevDimensions = dimensions;
+  });
+
+  var start = function start() {
+    $viewport.addEventListener('scroll', tick);
+    $viewport.addEventListener('resize', tick);
+
+    tick();
+  };
+
+  var stop = function stop() {
+    $viewport.removeEventListener('scroll', tick);
+    $viewport.removeEventListener('resize', tick);
+  };
+
+  return { start: start, stop: stop, tick: tick };
+}
+
+/* harmony default export */ var utils_createDimensionObserver = (createDimensionObserver);
+// CONCATENATED MODULE: ./src/index.js
+
+
+
+
+
+
+
+function FloatSidebar(options) {
+  var $viewport = options.viewport || window;
+  var $sideOuter = options.sidebar;
+  var $sideInner = options.sidebarInner || $sideOuter.firstElementChild;
+  var $relative = options.relative;
+
+  var topSpacing = options.topSpacing || 0;
+  var bottomSpacing = options.bottomSpacing || 0;
+
+  var fsm = utils_createFSM({
+    actions: fsmActions,
+    transitions: fsmTransitions,
+    initialState: STATE_START
+  });
+
+  var dimensionObserver = utils_createDimensionObserver(function (prevDimensions, dimensions) {
+    var transition = fsm.findTransitionFor(dimensions);
+
+    if (transition) {
+      fsm.performTransition(transition)(dimensions, {
+        $sideInner: $sideInner,
+        $sideOuter: $sideOuter,
+        $relative: $relative
+      });
+    }
+
+    updateSideOuterHeight(prevDimensions, dimensions);
+  }, {
+    $viewport: $viewport,
+    $sideOuter: $sideOuter,
+    $sideInner: $sideInner,
+    $relative: $relative,
+    topSpacing: topSpacing,
+    bottomSpacing: bottomSpacing
+  });
+
+  var updateSideOuterHeight = function updateSideOuterHeight(prevDimensions, dimensions) {
+    var isHeightChanged = Math.abs((prevDimensions.sideOuterHeight || 0) - dimensions.sideOuterHeight) >= 1;
+
+    if (isHeightChanged) {
+      $sideOuter.style.height = dimensions.sideOuterHeight + 'px';
+    }
+  };
+
+  var forceUpdate = function forceUpdate() {
+    dimensionObserver.tick();
+  };
+
+  var destroy = function destroy() {
+    dimensionObserver.stop();
+  };
+
+  var init = function init() {
+    $sideOuter.style.willChange = 'height';
+    $sideInner.style.width = 'inherit';
+    $sideInner.style.transform = 'translateZ(0)';
+    $sideInner.style.willChange = 'transform';
+
+    dimensionObserver.start();
+  };
+
+  requestAnimationFrame(init);
+
+  return { forceUpdate: forceUpdate, destroy: destroy };
+}
+
+/* harmony default export */ var src = __webpack_exports__["default"] = (FloatSidebar);
+
+/***/ })
+/******/ ])["default"];
+});
