@@ -1,7 +1,7 @@
 # FloatSidebar.js
 [![NPM version](https://img.shields.io/npm/v/float-sidebar.svg?style=flat)](https://www.npmjs.org/package/float-sidebar)
 
-> Lightweight (2kb gzipped), vanilla javascript plugin for making smart float sidebars
+> Lightweight (2kb gzipped), zero-dependency vanilla javascript library for making float sidebars
 
 [Demo](https://jsfiddle.net/vursen/cj4erfnj)
 
@@ -10,9 +10,11 @@
 ```bash
 npm install float-sidebar
 ```
+or
 ```bash
 yarn add float-sidebar
 ```
+or
 ```html
 <script src="./path/to/float-sidebar.min.js"></script>
 ```
@@ -53,6 +55,16 @@ floadSidebar.forceUpdate();
 // ...
 
 floatSidebar.destroy();
+```
+
+```css
+.sidebar {
+  /* Required */
+  position: relative;
+
+  /* Required. Sidebar element should have a fixed width */
+  width: 220px;
+}
 ```
 
 ## Options
@@ -107,7 +119,7 @@ Force recalculate and update sidebar position
 
 #### destroy()
 
-destroy plugin (doesn't delete DOM elements)
+Destroy plugin (doesn't delete DOM elements)
 
 ## License
 
