@@ -1,6 +1,6 @@
 /*!
- * float-sidebar - Lightweight, vanilla javascript library for making smart float sidebars
- * @version v1.1.0
+ * float-sidebar - Lightweight (2kb gzipped), zero-dependency vanilla javascript library for making float sidebars
+ * @version v1.2.0
  * @link https://github.com/vursen/FloatSidebar.js
  * @author Sergey Vinogradov
  * @license The MIT License (MIT)
@@ -100,13 +100,13 @@ var STATE_UNFIXED = 'UNFIXED';
 var STATE_BOTTOM_FIXED = 'BOTTOM_FIXED';
 var STATE_FINISH = 'FINISH';
 // CONCATENATED MODULE: ./src/constants/fsmTransitions.js
-var _STATE_START$STATE_TO;
+var fsmTransitions_STATE_START$STATE_TO;
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function fsmTransitions_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
-/* harmony default export */ var fsmTransitions = (_STATE_START$STATE_TO = {}, _defineProperty(_STATE_START$STATE_TO, STATE_START, [{
+/* harmony default export */ var fsmTransitions = (fsmTransitions_STATE_START$STATE_TO = {}, fsmTransitions_defineProperty(fsmTransitions_STATE_START$STATE_TO, STATE_START, [{
   to: STATE_FINISH,
   when: function when(d) {
     return [d.isSideInnerFitsPath === true, d.viewportTop + d.sideInnerHeight >= d.finishPoint];
@@ -121,7 +121,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   when: function when(d) {
     return [d.isSideInnerFitsPath === true, d.isSideInnerFitsViewport === true, d.viewportTop >= d.startPoint - d.topSpacing];
   }
-}]), _defineProperty(_STATE_START$STATE_TO, STATE_TOP_FIXED, [{
+}]), fsmTransitions_defineProperty(fsmTransitions_STATE_START$STATE_TO, STATE_TOP_FIXED, [{
   to: STATE_START,
   when: function when(d) {
     return [d.isSideInnerFitsPath === false];
@@ -141,7 +141,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   when: function when(d) {
     return [d.scrollDirection === 'down', d.isSideInnerFitsViewport === false];
   }
-}]), _defineProperty(_STATE_START$STATE_TO, STATE_UNFIXED, [{
+}]), fsmTransitions_defineProperty(fsmTransitions_STATE_START$STATE_TO, STATE_UNFIXED, [{
   to: STATE_START,
   when: function when(d) {
     return [d.isSideInnerFitsPath === false];
@@ -161,7 +161,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   when: function when(d) {
     return [d.isSideInnerFitsViewport === false, d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing];
   }
-}]), _defineProperty(_STATE_START$STATE_TO, STATE_BOTTOM_FIXED, [{
+}]), fsmTransitions_defineProperty(fsmTransitions_STATE_START$STATE_TO, STATE_BOTTOM_FIXED, [{
   to: STATE_START,
   when: function when(d) {
     return [d.isSideInnerFitsPath === false];
@@ -181,7 +181,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   when: function when(d) {
     return [d.sideInnerBottom >= d.finishPoint];
   }
-}]), _defineProperty(_STATE_START$STATE_TO, STATE_FINISH, [{
+}]), fsmTransitions_defineProperty(fsmTransitions_STATE_START$STATE_TO, STATE_FINISH, [{
   to: STATE_START,
   when: function when(d) {
     return [d.isSideInnerFitsPath === false];
@@ -196,7 +196,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   when: function when(d) {
     return [d.viewportTop <= d.sideInnerTop - d.topSpacing];
   }
-}]), _STATE_START$STATE_TO);
+}]), fsmTransitions_STATE_START$STATE_TO);
 // CONCATENATED MODULE: ./src/constants/fsmActions.js
 var fsmActions_STATE_START$STATE_TO;
 
@@ -288,7 +288,7 @@ function rAFThrottle(callback) {
 // CONCATENATED MODULE: ./src/utils/createDimensionObserver.js
 
 
-var computeViewportDimensions = function computeViewportDimensions($viewport) {
+var createDimensionObserver_computeViewportDimensions = function computeViewportDimensions($viewport) {
   var height = $viewport.clientHeight || $viewport.innerHeight;
   var top = $viewport.scrollTop || $viewport.pageYOffset;
   var bottom = top + height;
@@ -296,7 +296,7 @@ var computeViewportDimensions = function computeViewportDimensions($viewport) {
   return { top: top, bottom: bottom, height: height };
 };
 
-var computeElementDimensions = function computeElementDimensions($element, viewportTop) {
+var createDimensionObserver_computeElementDimensions = function computeElementDimensions($element, viewportTop) {
   var rect = $element.getBoundingClientRect();
 
   return {
@@ -306,7 +306,7 @@ var computeElementDimensions = function computeElementDimensions($element, viewp
   };
 };
 
-function createDimensionObserver(onChange, _ref) {
+function createDimensionObserver_createDimensionObserver(onChange, _ref) {
   var $viewport = _ref.$viewport,
       $relative = _ref.$relative,
       $sideInner = _ref.$sideInner,
@@ -321,10 +321,10 @@ function createDimensionObserver(onChange, _ref) {
   };
 
   var computeDimensions = function computeDimensions() {
-    var dim$viewport = computeViewportDimensions($viewport);
-    var dim$sideInner = computeElementDimensions($sideInner, dim$viewport.top);
-    var dim$sideOuter = computeElementDimensions($sideOuter, dim$viewport.top);
-    var dim$relative = computeElementDimensions($relative, dim$viewport.top);
+    var dim$viewport = createDimensionObserver_computeViewportDimensions($viewport);
+    var dim$sideInner = createDimensionObserver_computeElementDimensions($sideInner, dim$viewport.top);
+    var dim$sideOuter = createDimensionObserver_computeElementDimensions($sideOuter, dim$viewport.top);
+    var dim$relative = createDimensionObserver_computeElementDimensions($relative, dim$viewport.top);
 
     var scrollDirection = computeScrollDirection(dim$viewport.top);
 
@@ -381,7 +381,7 @@ function createDimensionObserver(onChange, _ref) {
   return { start: start, stop: stop, tick: tick };
 }
 
-/* harmony default export */ var utils_createDimensionObserver = (createDimensionObserver);
+/* harmony default export */ var utils_createDimensionObserver = (createDimensionObserver_createDimensionObserver);
 // CONCATENATED MODULE: ./src/index.js
 
 
@@ -390,7 +390,7 @@ function createDimensionObserver(onChange, _ref) {
 
 
 
-function FloatSidebar(options) {
+function src_FloatSidebar(options) {
   var $viewport = options.viewport || window;
   var $sideOuter = options.sidebar;
   var $sideInner = options.sidebarInner || $sideOuter.firstElementChild;
@@ -456,7 +456,7 @@ function FloatSidebar(options) {
   return { forceUpdate: forceUpdate, destroy: destroy };
 }
 
-/* harmony default export */ var src = __webpack_exports__["default"] = (FloatSidebar);
+/* harmony default export */ var src = __webpack_exports__["default"] = (src_FloatSidebar);
 
 /***/ })
 /******/ ])["default"];
