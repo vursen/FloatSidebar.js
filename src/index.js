@@ -1,9 +1,9 @@
-import fsmTransitions from './constants/fsmTransitions';
-import fsmActions     from './constants/fsmActions';
-import * as fsmStates from './constants/fsmStates';
+import fsmStates      from './fsm-states';
+import fsmActions     from './fsm-actions';
+import fsmTransitions from './fsm-transitions';
 
-import createFSM               from './utils/createFSM';
-import createDimensionObserver from './utils/createDimensionObserver';
+import createFSM               from './fsm';
+import createDimensionObserver from './dimension-observer';
 
 function FloatSidebar(options) {
   let $viewport  = options.viewport || window;
@@ -17,7 +17,7 @@ function FloatSidebar(options) {
   let fsm = createFSM({
     actions:      fsmActions,
     transitions:  fsmTransitions,
-    initialState: fsmStates.STATE_START
+    initialState: fsmStates.START
   });
 
   let dimensionObserver = createDimensionObserver(

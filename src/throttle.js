@@ -1,4 +1,4 @@
-function rAFThrottle(callback) {
+export function requestAnimationFrameThrottle(callback) {
   let requestId;
 
   return () => {
@@ -10,5 +10,3 @@ function rAFThrottle(callback) {
     }
   }
 }
-
-export default rAFThrottle;

@@ -1,22 +1,16 @@
-import {
-  STATE_START,
-  STATE_TOP_FIXED,
-  STATE_UNFIXED,
-  STATE_BOTTOM_FIXED,
-  STATE_FINISH
-} from './fsmStates.js';
+import states from './fsm-states.js';
 
 export default {
-  [STATE_START]: [
+  [states.START]: [
     {
-      to: STATE_FINISH,
+      to: states.FINISH,
       when: (d) => [
         d.isSideInnerFitsPath === true,
         d.viewportTop + d.sideInnerHeight >= d.finishPoint
       ]
     },
     {
-      to: STATE_BOTTOM_FIXED,
+      to: states.BOTTOM_FIXED,
       when: (d) => [
         d.isSideInnerFitsPath === true,
         d.isSideInnerFitsViewport === false,
@@ -24,7 +18,7 @@ export default {
       ],
     },
     {
-      to: STATE_TOP_FIXED,
+      to: states.TOP_FIXED,
       when: (d) => [
         d.isSideInnerFitsPath === true,
         d.isSideInnerFitsViewport === true,
@@ -33,21 +27,21 @@ export default {
     }
   ],
 
-  [STATE_TOP_FIXED]: [
+  [states.TOP_FIXED]: [
     {
-      to: STATE_START,
+      to: states.START,
       when: (d) => [d.isSideInnerFitsPath === false],
     },
     {
-      to: STATE_START,
+      to: states.START,
       when: (d) => [d.viewportTop <= d.startPoint - d.topSpacing]
     },
     {
-      to: STATE_FINISH,
+      to: states.FINISH,
       when: (d) => [d.sideInnerBottom >= d.finishPoint]
     },
     {
-      to: STATE_UNFIXED,
+      to: states.UNFIXED,
       when: (d) => [
         d.scrollDirection === 'down',
         d.isSideInnerFitsViewport === false
@@ -55,24 +49,24 @@ export default {
     },
   ],
 
-  [STATE_UNFIXED]: [
+  [states.UNFIXED]: [
     {
-      to: STATE_START,
+      to: states.START,
       when: (d) => [d.isSideInnerFitsPath === false],
     },
     {
-      to: STATE_TOP_FIXED,
+      to: states.TOP_FIXED,
       when: (d) => [d.viewportTop <= d.sideInnerTop - d.topSpacing]
     },
     {
-      to: STATE_TOP_FIXED,
+      to: states.TOP_FIXED,
       when: (d) => [
         d.isSideInnerFitsViewport === true,
         d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing
       ]
     },
     {
-      to: STATE_BOTTOM_FIXED,
+      to: states.BOTTOM_FIXED,
       when: (d) => [
         d.isSideInnerFitsViewport === false,
         d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing
@@ -80,39 +74,39 @@ export default {
     }
   ],
 
-  [STATE_BOTTOM_FIXED]: [
+  [states.BOTTOM_FIXED]: [
     {
-      to: STATE_START,
+      to: states.START,
       when: (d) => [d.isSideInnerFitsPath === false],
     },
     {
-      to: STATE_UNFIXED,
+      to: states.UNFIXED,
       when: (d) => [d.scrollDirection === 'up']
     },
     {
-      to: STATE_TOP_FIXED,
+      to: states.TOP_FIXED,
       when: (d) => [d.isSideInnerFitsViewport === true,]
     },
     {
-      to: STATE_FINISH,
+      to: states.FINISH,
       when: (d) => [d.sideInnerBottom >= d.finishPoint]
     }
   ],
 
-  [STATE_FINISH]: [
+  [states.FINISH]: [
     {
-      to: STATE_START,
+      to: states.START,
       when: (d) => [d.isSideInnerFitsPath === false],
     },
     {
-      to: STATE_BOTTOM_FIXED,
+      to: states.BOTTOM_FIXED,
       when: (d) => [
         d.sideInnerBottom + d.bottomSpacing <= d.finishPoint,
         d.viewportBottom <= d.finishPoint
       ]
     },
     {
-      to: STATE_TOP_FIXED,
+      to: states.TOP_FIXED,
       when: (d) => [d.viewportTop <= d.sideInnerTop - d.topSpacing]
     }
   ]

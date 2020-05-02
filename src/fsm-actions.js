@@ -1,37 +1,31 @@
-import {
-  STATE_START,
-  STATE_TOP_FIXED,
-  STATE_UNFIXED,
-  STATE_BOTTOM_FIXED,
-  STATE_FINISH
-} from './fsmStates.js';
+import states from './fsm-states.js';
 
 export default {
-  [STATE_START]: (d, { $sideInner }) => {
+  [states.START]: (_d, { $sideInner }) => {
     $sideInner.style.position = 'absolute';
     $sideInner.style.top      = '0';
     $sideInner.style.bottom   = 'auto';
   },
 
-  [STATE_TOP_FIXED]: (d, { $sideInner }) => {
+  [states.TOP_FIXED]: (d, { $sideInner }) => {
     $sideInner.style.position = 'fixed';
     $sideInner.style.top      = `${d.topSpacing}px`;
     $sideInner.style.bottom   = 'auto';
   },
 
-  [STATE_UNFIXED]: (d, { $sideInner }) => {
+  [states.UNFIXED]: (d, { $sideInner }) => {
     $sideInner.style.position = 'absolute';
     $sideInner.style.top      = `${d.sideInnerTop - d.startPoint}px`;
     $sideInner.style.bottom   = 'auto';
   },
 
-  [STATE_BOTTOM_FIXED]: (d, { $sideInner }) => {
+  [states.BOTTOM_FIXED]: (d, { $sideInner }) => {
     $sideInner.style.position = 'fixed';
     $sideInner.style.top      = 'auto';
     $sideInner.style.bottom   = `${d.bottomSpacing}px`;
   },
 
-  [STATE_FINISH]: (d, { $sideInner }) => {
+  [states.FINISH]: (_d, { $sideInner }) => {
     $sideInner.style.position = 'absolute';
     $sideInner.style.top      = 'auto';
     $sideInner.style.bottom   = '0';

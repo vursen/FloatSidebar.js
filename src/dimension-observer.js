@@ -1,4 +1,4 @@
-import rAFThrottle from './rAFThrottle';
+import { requestAnimationFrameThrottle } from './throttle.js';
 
 let computeViewportDimensions = ($viewport) => {
   let height = $viewport.clientHeight || $viewport.innerHeight;
@@ -18,7 +18,7 @@ let computeElementDimensions = ($element, viewportTop) => {
   }
 }
 
-function createDimensionObserver(onChange, {
+function createDimensionObserver(callback, {
   $viewport,
   $relative,
   $sideInner,
@@ -71,10 +71,10 @@ function createDimensionObserver(onChange, {
     }
   }
 
-  let tick = rAFThrottle(() => {
+  let tick = requestAnimationFrameThrottle(() => {
     let dimensions = computeDimensions();
 
-    onChange(prevDimensions, dimensions);
+    callback(prevDimensions, dimensions);
 
     prevDimensions = dimensions;
   });
