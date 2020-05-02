@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path    = require('path');
 const pkg     = require('./package.json');
 
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 const banner = [
   `${pkg.name} - ${pkg.description}`,
@@ -40,13 +40,16 @@ module.exports = {
   },
 
   optimization: {
-    minimize: false
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        include: /\.min\.js$/,
+        extractComments: false
+      })
+    ],
   },
 
   plugins: [
-    new UglifyJsPlugin({
-      include: /\.min\.js$/,
-    }),
     new webpack.BannerPlugin(banner)
   ]
 }
