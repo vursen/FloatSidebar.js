@@ -1,6 +1,21 @@
 {
   "name": "float-sidebar",
-  "description": "Lightweight (2kb gzipped), zero-dependency vanilla javascript library for making float sidebars",
+  "description": "Lightweight (2kb gzipped), zero-dependency javascript library for making float sidebars",
+  "keywords": [
+    "javascript",
+    "sidebars",
+    "lightweight",
+    "float sidebar",
+    "sticky sidebar",
+    "zero dependencies"
+  ],
+  "author": "Sergey Vinogradov",
+  "email": "mr.vursen@gmail.com",
+  "license": "The MIT License (MIT)",
+  "bugs": {
+    "url": "https://github.com/vursen/FloatSidebar.js/issues"
+  },
+  "homepage": "https://github.com/vursen/FloatSidebar.js",
   "version": "1.2.1",
   "main": "./dist/float-sidebar.min.js",
   "module": "./dist/float-sidebar.js",
@@ -20,12 +35,5 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vursen/FloatSidebar.js.git"
-  },
-  "author": "Sergey Vinogradov",
-  "email": "mr.vursen@gmail.com",
-  "license": "The MIT License (MIT)",
-  "bugs": {
-    "url": "https://github.com/vursen/FloatSidebar.js/issues"
-  },
-  "homepage": "https://github.com/vursen/FloatSidebar.js"
+  }
 }
