@@ -1,7 +1,7 @@
 # FloatSidebar.js
 [![NPM version](https://img.shields.io/npm/v/float-sidebar.svg?style=flat)](https://www.npmjs.org/package/float-sidebar)
 
-> Lightweight (2kb gzipped), zero-dependency vanilla javascript library for making float sidebars
+> Lightweight (2kb gzipped), zero-dependency javascript library for making float sidebars
 
 [Demo](https://jsfiddle.net/vursen/cj4erfnj)
 
@@ -22,7 +22,7 @@ or
 ## Usage
 
 ```html
-<div>
+<div class="wrapper">
   <div class="content">
     <!-- Content -->
   </div>
@@ -33,6 +33,25 @@ or
     </div>
   </div>
 </div>
+```
+
+```css
+.wrapper {
+  display: flex;
+  /*
+    Required.
+    It will prevent the infinite growth of the sidebar height if you are using the library with 'infinite scroll'
+  */
+  align-items: flex-start;
+}
+
+.sidebar {
+  /* Required */
+  position: relative;
+
+  /* Required. The sidebar element must have a fixed width */
+  width: 220px;
+}
 ```
 
 ```javascript
@@ -50,21 +69,11 @@ const floatSidebar = FloatSidebar({
 
 // ...
 
-floadSidebar.forceUpdate();
+floatSidebar.forceUpdate();
 
 // ...
 
 floatSidebar.destroy();
-```
-
-```css
-.sidebar {
-  /* Required */
-  position: relative;
-
-  /* Required. Sidebar element should have a fixed width */
-  width: 220px;
-}
 ```
 
 ## Options
