@@ -1,13 +1,15 @@
 {
   "name": "float-sidebar",
-  "description": "Lightweight (2kb gzipped), zero-dependency javascript library for making float sidebars",
+  "description": "Lightweight (2kb gzipped), zero-dependency javascript library for making float sidebars based on the finite state machine",
   "keywords": [
-    "javascript",
+    "fsm",
     "sidebars",
+    "javascript",
     "lightweight",
     "float sidebar",
     "sticky sidebar",
-    "zero dependencies"
+    "zero dependencies",
+    "finite state machine"
   ],
   "author": "Sergey Vinogradov",
   "email": "mr.vursen@gmail.com",
