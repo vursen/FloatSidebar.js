@@ -1,6 +1,6 @@
 /*!
- * float-sidebar - Lightweight (2kb gzipped), zero-dependency javascript library for making float sidebars
- * @version v1.2.2
+ * float-sidebar - Lightweight (2kb gzipped), zero-dependency javascript library for making float sidebars based on the finite state machine
+ * @version v1.2.3
  * @link https://github.com/vursen/FloatSidebar.js
  * @author Sergey Vinogradov
  * @license The MIT License (MIT)
