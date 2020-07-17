@@ -1,9 +1,13 @@
 # FloatSidebar.js
 [![NPM version](https://img.shields.io/npm/v/float-sidebar.svg?style=flat)](https://www.npmjs.org/package/float-sidebar)
 
-> Lightweight (2kb gzipped), zero-dependency javascript library for making float sidebars
+> Lightweight (2kb gzipped), zero-dependency javascript library for making float sidebars based on the finite state machine
 
 [Demo](https://jsfiddle.net/vursen/cj4erfnj)
+
+This library based on the finite state machine pattern. It allowed to get a much more simple and reliable solution.
+
+You can read more about this approache in [the article on medium](https://medium.com/@vursen/state-machine-for-sticky-blocks-70ca0bf4ee97) (in russian)
 
 ## Install
 
