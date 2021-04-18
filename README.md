@@ -91,7 +91,7 @@ floatSidebar.destroy();
 | Method        | Description   |
 |:------------- |:------------- |
 | forceUpdate() | Recalculates all the dimensions and finally updates the position of the sidebar. |
-| destroy()     | Disposes DOM listeners. |
+| destroy()     | Disposes the DOM listeners. |
 
 ## License
 
