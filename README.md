@@ -1,13 +1,11 @@
 # FloatSidebar.js
 [![NPM version](https://img.shields.io/npm/v/float-sidebar.svg?style=flat)](https://www.npmjs.org/package/float-sidebar)
 
-> Lightweight (2kb gzipped), zero-dependency javascript library for making float sidebars based on the finite state machine
+> A lightweight (2kb gzipped), zero-dependency, javascript library for creating float sidebars. Based on the finite state machine pattern.
 
 [Demo](https://jsfiddle.net/vursen/cj4erfnj)
 
-This library based on the finite state machine pattern. It allowed to get a much more simple and reliable solution.
-
-You can read more about this approache in [the article on medium](https://medium.com/@vursen/state-machine-for-sticky-blocks-70ca0bf4ee97) (in russian)
+The library is based on the finite state machine pattern that led to a more simple and reliable solution. Read more in [the article on medium](https://medium.com/@vursen/state-machine-for-sticky-blocks-70ca0bf4ee97) (in Russian)
 
 ## Install
 
@@ -42,10 +40,7 @@ or
 ```css
 .wrapper {
   display: flex;
-  /*
-    Required.
-    It will prevent the infinite growth of the sidebar height if you are using the library with 'infinite scroll'
-  */
+  /* Required in case of using an infinite scroll */
   align-items: flex-start;
 }
 
@@ -53,7 +48,7 @@ or
   /* Required */
   position: relative;
 
-  /* Required. The sidebar element must have a fixed width */
+  /* Required. The sidebar element should have a fixed width */
   width: 220px;
 }
 ```
@@ -87,52 +82,52 @@ floatSidebar.destroy();
 Type: `Element`<br/>
 Required
 
-Sidebar element
+The sidebar element
 
 #### relative
 
 Type: `Element`<br/>
 Required
 
-Sidebar relative element, e.g. main content
+The sidebar relative element, e.g. a main content
 
 #### viewport
 
 Type: `Element`<br/>
 Defaults: `window`
 
-Viewport element
+The viewport element
 
 #### sidebarInner
 
 Type: `Element`<br/>
 Defaults: `first element child of sidebar element`
 
-Sidebar inner element
+The sidebar inner element
 
 #### topSpacing
 
 Type: `Integer`<br/>
 Defaults: `0`
 
-Viewport top spacing when sidebar fixed
+The space from the top of the viewport. It is used when the sidebar is fixed.
 
 #### bottomSpacing
 
 Type: `Integer`<br/>
 Defaults: `0`
 
-Viewport bottom spacing when sidebar fixed
+The space from the bottom of the viewport. It is used when the sidebar is fixed.
 
 ## Instance API
 
 #### forceUpdate()
 
-Force recalculate and update sidebar position
+Recalculates all the dimensions and finally updates the position of the sidebar.
 
 #### destroy()
 
-Destroy plugin (doesn't delete DOM elements)
+Deactivates listeners.
 
 ## License
 
