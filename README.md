@@ -77,57 +77,21 @@ floatSidebar.destroy();
 
 ## Options
 
-#### sidebar
-
-Type: `Element`<br/>
-Required
-
-The sidebar element
-
-#### relative
-
-Type: `Element`<br/>
-Required
-
-The sidebar relative element, e.g. a main content
-
-#### viewport
-
-Type: `Element`<br/>
-Defaults: `window`
-
-The viewport element
-
-#### sidebarInner
-
-Type: `Element`<br/>
-Defaults: `The first child of the sidebar element`
-
-The sidebar inner element
-
-#### topSpacing
-
-Type: `Integer`<br/>
-Defaults: `0`
-
-The space from the top of the viewport. It is used when the sidebar is fixed.
-
-#### bottomSpacing
-
-Type: `Integer`<br/>
-Defaults: `0`
-
-The space from the bottom of the viewport. It is used when the sidebar is fixed.
+| Name          | Type          | Default                     | Description      |
+|:------------- |:------------- |:--------------------------- | ---------------- |
+| sidebar       | `HTMLElement` | Required                    | The sidebar element |
+| relative      | `HTMLElement` | Required                    | The sidebar relative element, e.g. the main content |
+| viewport      | `HTMLElement` | `window`                    | The viewport element |
+| sidebarInner  | `HTMLElement` | `sidebar.firstElementChild` | The sidebar inner element |
+| topSpacing    | `number`      | `0`                         | The space from the top of the viewport. It is used when the sidebar is fixed. |
+| bottomSpacing | `number`      | `0`                         | The space from the bottom of the viewport. It is used when the sidebar is fixed. |
 
 ## Instance API
 
-#### forceUpdate()
-
-Recalculates all the dimensions and finally updates the position of the sidebar.
-
-#### destroy()
-
-Deactivates listeners.
+| Method        | Description   |
+|:------------- |:------------- |
+| forceUpdate() | Recalculates all the dimensions and finally updates the position of the sidebar. |
+| destroy()     | Disposes DOM listeners. |
 
 ## License
 
