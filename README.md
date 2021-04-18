@@ -101,7 +101,7 @@ The viewport element
 #### sidebarInner
 
 Type: `Element`<br/>
-Defaults: `first element child of sidebar element`
+Defaults: `The first child of the sidebar element`
 
 The sidebar inner element
 
