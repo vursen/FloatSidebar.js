@@ -1,7 +1,5 @@
-export default {
-  START:        'START',
-  TOP_FIXED:    'TOP_FIXED',
-  UNFIXED:      'UNFIXED',
-  BOTTOM_FIXED: 'BOTTOM_FIXED',
-  FINISH:       'FINISH'
-}
+export const START = 'START';
+export const TOP_FIXED = 'TOP_FIXED';
+export const UNFIXED = 'UNFIXED';
+export const BOTTOM_FIXED = 'BOTTOM_FIXED';
+export const FINISH = 'FINISH';

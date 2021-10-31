@@ -1,4 +1,4 @@
-import fsmStates      from './fsm-states';
+import * as fsmStates from './fsm-states';
 import fsmActions     from './fsm-actions';
 import fsmTransitions from './fsm-transitions';
 
@@ -13,6 +13,8 @@ function FloatSidebar(options) {
 
   let topSpacing    = options.topSpacing    || 0;
   let bottomSpacing = options.bottomSpacing || 0;
+
+  let onStateChange = options.onStateChange;
 
   let fsm = createFSM({
     actions:      fsmActions,
@@ -30,6 +32,10 @@ function FloatSidebar(options) {
           $sideOuter,
           $relative
         });
+
+        if (onStateChange) {
+          onStateChange(transition.to);
+        }
       }
 
       updateSideOuterHeight(prevDimensions, dimensions);

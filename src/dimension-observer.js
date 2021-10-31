@@ -71,24 +71,26 @@ function createDimensionObserver(callback, {
     }
   }
 
-  let tick = requestAnimationFrameThrottle(() => {
+  let tick = () => {
     let dimensions = computeDimensions();
 
     callback(prevDimensions, dimensions);
 
     prevDimensions = dimensions;
-  });
+  };
+
+  let throttledTick = requestAnimationFrameThrottle(tick);
 
   let start = () => {
-    $viewport.addEventListener('scroll', tick);
-    $viewport.addEventListener('resize', tick);
+    $viewport.addEventListener('scroll', throttledTick);
+    $viewport.addEventListener('resize', throttledTick);
 
     tick();
   }
 
   let stop = () => {
-    $viewport.removeEventListener('scroll', tick);
-    $viewport.removeEventListener('resize', tick);
+    $viewport.removeEventListener('scroll', throttledTick);
+    $viewport.removeEventListener('resize', throttledTick);
   }
 
   return { start, stop, tick };
