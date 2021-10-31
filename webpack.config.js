@@ -16,8 +16,8 @@ module.exports = {
   mode: 'production',
 
   entry: {
-    'float-sidebar': path.resolve(__dirname, 'src/index.js'),
-    'float-sidebar.min': path.resolve(__dirname, 'src/index.js'),
+    'float-sidebar': path.resolve(__dirname, 'src/float-sidebar.js'),
+    'float-sidebar.min': path.resolve(__dirname, 'src/float-sidebar.js'),
   },
 
   output: {
