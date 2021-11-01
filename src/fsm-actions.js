@@ -1,4 +1,4 @@
-import states from './fsm-states.js';
+import * as states from './fsm-states.js';
 
 export default {
   [states.START]: (_d, { $sideInner }) => {
@@ -17,7 +17,7 @@ export default {
 
   [states.UNFIXED]: (d, { $sideInner }) => {
     $sideInner.style.position = 'absolute';
-    $sideInner.style.top      = `${d.sideInnerTop - d.startPoint}px`;
+    $sideInner.style.top      = `${d.sideInnerTop - d.startPoint + 1}px`;
     $sideInner.style.bottom   = 'auto';
     $sideInner.dataset.state  = 'UNFIXED';
   },

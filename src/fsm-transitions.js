@@ -1,4 +1,4 @@
-import states from './fsm-states.js';
+import * as states from './fsm-states.js';
 
 export default {
   [states.START]: [
@@ -34,7 +34,7 @@ export default {
     },
     {
       to: states.START,
-      when: (d) => [d.viewportTop <= d.startPoint - d.topSpacing]
+      when: (d) => [d.viewportTop < d.startPoint - d.topSpacing]
     },
     {
       to: states.FINISH,
