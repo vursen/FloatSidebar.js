@@ -42,6 +42,7 @@ export function nextFrame() {
 
 export async function scrollTo(top) {
   window.scrollTo({ top });
+  await nextFrame();
 }
 
 export function getElementTop(element) {
