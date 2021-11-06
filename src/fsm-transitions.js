@@ -6,7 +6,7 @@ export default {
       to: states.FINISH,
       when: (d) => [
         d.isSideInnerFitsPath === true,
-        d.viewportTop + d.sideInnerHeight >= d.finishPoint
+        d.viewportTop + d.sideInnerHeight > d.finishPoint
       ]
     },
     {
@@ -14,7 +14,7 @@ export default {
       when: (d) => [
         d.isSideInnerFitsPath === true,
         d.isSideInnerFitsViewport === false,
-        d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing
+        d.viewportBottom > d.sideInnerBottom + d.bottomSpacing
       ],
     },
     {
@@ -22,7 +22,7 @@ export default {
       when: (d) => [
         d.isSideInnerFitsPath === true,
         d.isSideInnerFitsViewport === true,
-        d.viewportTop >= d.startPoint - d.topSpacing
+        d.viewportTop > d.startPoint - d.topSpacing
       ]
     }
   ],
@@ -38,7 +38,7 @@ export default {
     },
     {
       to: states.FINISH,
-      when: (d) => [d.sideInnerBottom >= d.finishPoint]
+      when: (d) => [d.sideInnerBottom > d.finishPoint]
     },
     {
       to: states.UNFIXED,
@@ -55,8 +55,19 @@ export default {
       when: (d) => [d.isSideInnerFitsPath === false],
     },
     {
+      to: states.START,
+      when: (d) => [d.viewportTop <= d.startPoint - d.topSpacing]
+    },
+    {
+      to: states.FINISH,
+      when: (d) => [d.viewportTop + d.sideInnerHeight > d.finishPoint]
+    },
+    {
       to: states.TOP_FIXED,
-      when: (d) => [d.viewportTop <= d.sideInnerTop - d.topSpacing]
+      when: (d) => [
+        d.scrollDirection === 'up',
+        d.viewportTop <= d.sideInnerTop - d.topSpacing
+      ]
     },
     {
       to: states.TOP_FIXED,
@@ -69,7 +80,7 @@ export default {
       to: states.BOTTOM_FIXED,
       when: (d) => [
         d.isSideInnerFitsViewport === false,
-        d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing
+        d.viewportBottom > d.sideInnerBottom + d.bottomSpacing
       ]
     }
   ],
@@ -78,6 +89,13 @@ export default {
     {
       to: states.START,
       when: (d) => [d.isSideInnerFitsPath === false],
+    },
+    {
+      to: states.START,
+      when: (d) => [
+        d.isSideInnerFitsPath === true,
+        d.sideInnerTop <= d.startPoint - d.topSpacing
+      ]
     },
     {
       to: states.UNFIXED,
@@ -89,7 +107,7 @@ export default {
     },
     {
       to: states.FINISH,
-      when: (d) => [d.sideInnerBottom >= d.finishPoint]
+      when: (d) => [d.sideInnerBottom > d.finishPoint]
     }
   ],
 
@@ -99,10 +117,14 @@ export default {
       when: (d) => [d.isSideInnerFitsPath === false],
     },
     {
+      to: states.START,
+      when: (d) => [d.viewportTop <= d.startPoint - d.topSpacing]
+    },
+    {
       to: states.BOTTOM_FIXED,
       when: (d) => [
         d.sideInnerBottom + d.bottomSpacing <= d.finishPoint,
-        d.viewportBottom <= d.finishPoint
+        d.viewportBottom < d.finishPoint
       ]
     },
     {

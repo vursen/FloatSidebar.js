@@ -34,7 +34,6 @@ function FloatSidebar(options) {
 
       updateSideOuterHeight(prevDimensions, dimensions);
     },
-
     {
       $viewport,
       $sideOuter,
