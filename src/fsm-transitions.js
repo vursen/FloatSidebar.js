@@ -34,7 +34,7 @@ export default {
     },
     {
       to: states.START,
-      when: (d) => [d.viewportTop < d.startPoint - d.topSpacing]
+      when: (d) => [d.viewportTop <= d.startPoint - d.topSpacing]
     },
     {
       to: states.FINISH,
