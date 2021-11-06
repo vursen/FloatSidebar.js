@@ -1,5 +1,3 @@
-import { expect } from '@esm-bundle/chai';
-
 export function fixtureSidebar() {
   let wrapper;
 
@@ -42,6 +40,20 @@ export function nextFrame() {
 
 export async function scrollTo(top) {
   window.scrollTo({ top });
+  await nextFrame();
+}
+
+export async function smoothScrollTo(top) {
+  top = Math.max(top, 0);
+  top = Math.min(top, document.body.clientHeight - window.innerHeight);
+
+  const delta = top - window.pageYOffset;
+  const step = Math.sign(delta);
+
+  while (top - window.pageYOffset !== 0) {
+    window.scrollTo({ top: window.pageYOffset + step });
+  }
+
   await nextFrame();
 }
 
