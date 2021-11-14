@@ -1,16 +1,18 @@
 # FloatSidebar.js
 [![NPM version](https://img.shields.io/npm/v/float-sidebar.svg?style=flat)](https://www.npmjs.org/package/float-sidebar)
 
-> A lightweight (2kb gzipped), zero-dependency, javascript library for creating float sidebars. Based on the finite state machine pattern.
+> A lightweight (2kb gzipped), zero-dependency javascript library for making a sidebar float.
 
 [Demo](https://jsfiddle.net/vursen/cj4erfnj)
 
-The library is based on the finite state machine pattern that led to a more simple and reliable solution. Read more in [the article on medium](https://medium.com/@vursen/state-machine-for-sticky-blocks-70ca0bf4ee97) (in Russian)
+The library is designed on top of the finite state machine pattern, which results in a straightforward solution that is pretty easy to understand and maintain.
+
+More about the approach in [the article on medium](https://medium.com/@vursen/state-machine-for-sticky-blocks-70ca0bf4ee97) (in Russian)
 
 ## Install
 
 ```bash
-npm install float-sidebar
+npm install float-sidebar --save
 ```
 or
 ```bash
@@ -92,6 +94,11 @@ floatSidebar.destroy();
 |:------------- |:------------- |
 | forceUpdate() | Recalculates all the dimensions and finally updates the position of the sidebar. |
 | destroy()     | Disposes the DOM listeners. |
+
+
+## Similar libraries
+
+- https://github.com/abouolia/sticky-sidebar
 
 ## License
 

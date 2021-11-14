@@ -1,6 +1,6 @@
 {
   "name": "float-sidebar",
-  "description": "Lightweight (2kb gzipped), zero-dependency javascript library for making float sidebars based on the finite state machine",
+  "description": "A lightweight (2kb gzipped), zero-dependency javascript library for making a sidebar float",
   "keywords": [
     "fsm",
     "sidebars",
