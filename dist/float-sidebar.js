@@ -1,6 +1,6 @@
 /*!
- * float-sidebar - Lightweight (2kb gzipped), zero-dependency javascript library for making float sidebars based on the finite state machine
- * @version v1.2.3
+ * float-sidebar - A lightweight (2kb gzipped), zero-dependency javascript library for making a sidebar float
+ * @version v1.2.4
  * @link https://github.com/vursen/FloatSidebar.js
  * @author Sergey Vinogradov
  * @license The MIT License (MIT)
@@ -110,13 +110,11 @@ return /******/ (function(modules) { // webpackBootstrap
 __webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./src/fsm-states.js
-/* harmony default export */ var fsm_states = ({
-  START: 'START',
-  TOP_FIXED: 'TOP_FIXED',
-  UNFIXED: 'UNFIXED',
-  BOTTOM_FIXED: 'BOTTOM_FIXED',
-  FINISH: 'FINISH'
-});
+var START = 'START';
+var TOP_FIXED = 'TOP_FIXED';
+var UNFIXED = 'UNFIXED';
+var BOTTOM_FIXED = 'BOTTOM_FIXED';
+var FINISH = 'FINISH';
 // CONCATENATED MODULE: ./src/fsm-actions.js
 var _states$START$states$;
 
@@ -124,31 +122,31 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-/* harmony default export */ var fsm_actions = (_states$START$states$ = {}, _defineProperty(_states$START$states$, fsm_states.START, function (_d, _ref) {
+/* harmony default export */ var fsm_actions = (_states$START$states$ = {}, _defineProperty(_states$START$states$, START, function (_d, _ref) {
   var $sideInner = _ref.$sideInner;
 
   $sideInner.style.position = 'absolute';
   $sideInner.style.top = '0';
   $sideInner.style.bottom = 'auto';
-}), _defineProperty(_states$START$states$, fsm_states.TOP_FIXED, function (d, _ref2) {
+}), _defineProperty(_states$START$states$, TOP_FIXED, function (d, _ref2) {
   var $sideInner = _ref2.$sideInner;
 
   $sideInner.style.position = 'fixed';
   $sideInner.style.top = d.topSpacing + 'px';
   $sideInner.style.bottom = 'auto';
-}), _defineProperty(_states$START$states$, fsm_states.UNFIXED, function (d, _ref3) {
+}), _defineProperty(_states$START$states$, UNFIXED, function (d, _ref3) {
   var $sideInner = _ref3.$sideInner;
 
   $sideInner.style.position = 'absolute';
   $sideInner.style.top = d.sideInnerTop - d.startPoint + 'px';
   $sideInner.style.bottom = 'auto';
-}), _defineProperty(_states$START$states$, fsm_states.BOTTOM_FIXED, function (d, _ref4) {
+}), _defineProperty(_states$START$states$, BOTTOM_FIXED, function (d, _ref4) {
   var $sideInner = _ref4.$sideInner;
 
   $sideInner.style.position = 'fixed';
   $sideInner.style.top = 'auto';
   $sideInner.style.bottom = d.bottomSpacing + 'px';
-}), _defineProperty(_states$START$states$, fsm_states.FINISH, function (_d, _ref5) {
+}), _defineProperty(_states$START$states$, FINISH, function (_d, _ref5) {
   var $sideInner = _ref5.$sideInner;
 
   $sideInner.style.position = 'absolute';
@@ -162,93 +160,113 @@ function fsm_transitions_defineProperty(obj, key, value) { if (key in obj) { Obj
 
 
 
-/* harmony default export */ var fsm_transitions = (fsm_transitions_states$START$states$ = {}, fsm_transitions_defineProperty(fsm_transitions_states$START$states$, fsm_states.START, [{
-  to: fsm_states.FINISH,
+/* harmony default export */ var fsm_transitions = (fsm_transitions_states$START$states$ = {}, fsm_transitions_defineProperty(fsm_transitions_states$START$states$, START, [{
+  to: FINISH,
   when: function when(d) {
-    return [d.isSideInnerFitsPath === true, d.viewportTop + d.sideInnerHeight >= d.finishPoint];
+    return [d.isSideInnerFitsPath === true, d.viewportTop + d.sideInnerHeight > d.finishPoint];
   }
 }, {
-  to: fsm_states.BOTTOM_FIXED,
+  to: BOTTOM_FIXED,
   when: function when(d) {
-    return [d.isSideInnerFitsPath === true, d.isSideInnerFitsViewport === false, d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing];
+    return [d.isSideInnerFitsPath === true, d.isSideInnerFitsViewport === false, d.viewportBottom > d.sideInnerBottom + d.bottomSpacing];
   }
 }, {
-  to: fsm_states.TOP_FIXED,
+  to: TOP_FIXED,
   when: function when(d) {
-    return [d.isSideInnerFitsPath === true, d.isSideInnerFitsViewport === true, d.viewportTop >= d.startPoint - d.topSpacing];
+    return [d.isSideInnerFitsPath === true, d.isSideInnerFitsViewport === true, d.viewportTop > d.startPoint - d.topSpacing];
   }
-}]), fsm_transitions_defineProperty(fsm_transitions_states$START$states$, fsm_states.TOP_FIXED, [{
-  to: fsm_states.START,
+}]), fsm_transitions_defineProperty(fsm_transitions_states$START$states$, TOP_FIXED, [{
+  to: START,
   when: function when(d) {
     return [d.isSideInnerFitsPath === false];
   }
 }, {
-  to: fsm_states.START,
+  to: START,
   when: function when(d) {
     return [d.viewportTop <= d.startPoint - d.topSpacing];
   }
 }, {
-  to: fsm_states.FINISH,
+  to: FINISH,
   when: function when(d) {
-    return [d.sideInnerBottom >= d.finishPoint];
+    return [d.sideInnerBottom > d.finishPoint];
   }
 }, {
-  to: fsm_states.UNFIXED,
+  to: UNFIXED,
   when: function when(d) {
     return [d.scrollDirection === 'down', d.isSideInnerFitsViewport === false];
   }
-}]), fsm_transitions_defineProperty(fsm_transitions_states$START$states$, fsm_states.UNFIXED, [{
-  to: fsm_states.START,
+}]), fsm_transitions_defineProperty(fsm_transitions_states$START$states$, UNFIXED, [{
+  to: START,
   when: function when(d) {
     return [d.isSideInnerFitsPath === false];
   }
 }, {
-  to: fsm_states.TOP_FIXED,
+  to: START,
   when: function when(d) {
-    return [d.viewportTop <= d.sideInnerTop - d.topSpacing];
+    return [d.viewportTop <= d.startPoint - d.topSpacing];
   }
 }, {
-  to: fsm_states.TOP_FIXED,
+  to: FINISH,
+  when: function when(d) {
+    return [d.viewportTop + d.sideInnerHeight > d.finishPoint];
+  }
+}, {
+  to: TOP_FIXED,
+  when: function when(d) {
+    return [d.scrollDirection === 'up', d.viewportTop <= d.sideInnerTop - d.topSpacing];
+  }
+}, {
+  to: TOP_FIXED,
   when: function when(d) {
     return [d.isSideInnerFitsViewport === true, d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing];
   }
 }, {
-  to: fsm_states.BOTTOM_FIXED,
+  to: BOTTOM_FIXED,
   when: function when(d) {
-    return [d.isSideInnerFitsViewport === false, d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing];
+    return [d.isSideInnerFitsViewport === false, d.viewportBottom > d.sideInnerBottom + d.bottomSpacing];
   }
-}]), fsm_transitions_defineProperty(fsm_transitions_states$START$states$, fsm_states.BOTTOM_FIXED, [{
-  to: fsm_states.START,
+}]), fsm_transitions_defineProperty(fsm_transitions_states$START$states$, BOTTOM_FIXED, [{
+  to: START,
   when: function when(d) {
     return [d.isSideInnerFitsPath === false];
   }
 }, {
-  to: fsm_states.UNFIXED,
+  to: START,
+  when: function when(d) {
+    return [d.isSideInnerFitsPath === true, d.sideInnerTop <= d.startPoint - d.topSpacing];
+  }
+}, {
+  to: UNFIXED,
   when: function when(d) {
     return [d.scrollDirection === 'up'];
   }
 }, {
-  to: fsm_states.TOP_FIXED,
+  to: TOP_FIXED,
   when: function when(d) {
     return [d.isSideInnerFitsViewport === true];
   }
 }, {
-  to: fsm_states.FINISH,
+  to: FINISH,
   when: function when(d) {
-    return [d.sideInnerBottom >= d.finishPoint];
+    return [d.sideInnerBottom > d.finishPoint];
   }
-}]), fsm_transitions_defineProperty(fsm_transitions_states$START$states$, fsm_states.FINISH, [{
-  to: fsm_states.START,
+}]), fsm_transitions_defineProperty(fsm_transitions_states$START$states$, FINISH, [{
+  to: START,
   when: function when(d) {
     return [d.isSideInnerFitsPath === false];
   }
 }, {
-  to: fsm_states.BOTTOM_FIXED,
+  to: START,
   when: function when(d) {
-    return [d.sideInnerBottom + d.bottomSpacing <= d.finishPoint, d.viewportBottom <= d.finishPoint];
+    return [d.viewportTop <= d.startPoint - d.topSpacing];
   }
 }, {
-  to: fsm_states.TOP_FIXED,
+  to: BOTTOM_FIXED,
+  when: function when(d) {
+    return [d.sideInnerBottom + d.bottomSpacing <= d.finishPoint, d.viewportBottom < d.finishPoint];
+  }
+}, {
+  to: TOP_FIXED,
   when: function when(d) {
     return [d.viewportTop <= d.sideInnerTop - d.topSpacing];
   }
@@ -374,31 +392,33 @@ function createDimensionObserver(callback, _ref) {
     };
   };
 
-  var tick = requestAnimationFrameThrottle(function () {
+  var tick = function tick() {
     var dimensions = computeDimensions();
 
     callback(prevDimensions, dimensions);
 
     prevDimensions = dimensions;
-  });
+  };
+
+  var throttledTick = requestAnimationFrameThrottle(tick);
 
   var start = function start() {
-    $viewport.addEventListener('scroll', tick);
-    $viewport.addEventListener('resize', tick);
+    $viewport.addEventListener('scroll', throttledTick);
+    $viewport.addEventListener('resize', throttledTick);
 
     tick();
   };
 
   var stop = function stop() {
-    $viewport.removeEventListener('scroll', tick);
-    $viewport.removeEventListener('resize', tick);
+    $viewport.removeEventListener('scroll', throttledTick);
+    $viewport.removeEventListener('resize', throttledTick);
   };
 
   return { start: start, stop: stop, tick: tick };
 }
 
 /* harmony default export */ var dimension_observer = (createDimensionObserver);
-// CONCATENATED MODULE: ./src/index.js
+// CONCATENATED MODULE: ./src/float-sidebar.js
 
 
 
@@ -415,10 +435,12 @@ function FloatSidebar(options) {
   var topSpacing = options.topSpacing || 0;
   var bottomSpacing = options.bottomSpacing || 0;
 
+  var onStateChange = options.onStateChange;
+
   var fsm = src_fsm({
     actions: fsm_actions,
     transitions: fsm_transitions,
-    initialState: fsm_states.START
+    initialState: START
   });
 
   var dimensionObserver = dimension_observer(function (prevDimensions, dimensions) {
@@ -430,6 +452,10 @@ function FloatSidebar(options) {
         $sideOuter: $sideOuter,
         $relative: $relative
       });
+
+      if (onStateChange) {
+        onStateChange(transition.to);
+      }
     }
 
     updateSideOuterHeight(prevDimensions, dimensions);
@@ -472,7 +498,7 @@ function FloatSidebar(options) {
   return { forceUpdate: forceUpdate, destroy: destroy };
 }
 
-/* harmony default export */ var src = __webpack_exports__["default"] = (FloatSidebar);
+/* harmony default export */ var float_sidebar = __webpack_exports__["default"] = (FloatSidebar);
 
 /***/ })
 /******/ ])["default"];
