@@ -22,7 +22,6 @@
   "main": "./dist/float-sidebar.min.js",
   "module": "./dist/float-sidebar.js",
   "devDependencies": {
-    "@esm-bundle/chai": "^4.3.4-fix.0",
     "@open-wc/testing": "^3.0.2",
     "@web/test-runner": "^0.13.20",
     "babel-core": "^6.26.3",

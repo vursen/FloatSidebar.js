@@ -1,27 +1,23 @@
 import { setViewport } from '@web/test-runner-commands';
-import { expect } from '@open-wc/testing';
+import { expect, fixture, html } from '@open-wc/testing';
 import sinon from 'sinon';
-import FloatSidebar from '../src/float-sidebar.js';
-import { START, TOP_FIXED, BOTTOM_FIXED, UNFIXED, FINISH } from '../src/fsm-states.js';
-
 import {
-  fixtureSidebar,
-  querySidebar,
-  querySidebarInner,
-  queryContent,
-  nextFrame,
   scrollTo,
+  nextFrame,
   getElementTop,
   getElementBottom
 } from './helpers.js';
+import FloatSidebar from '../src/float-sidebar.js';
+import { START, TOP_FIXED, BOTTOM_FIXED, UNFIXED, FINISH } from '../src/fsm-states.js';
+
+const VIEWPORT_WIDTH = 1000;
+const VIEWPORT_HEIGHT = 1000;
 
 describe('transitions', function() {
-  const viewportWidth = 1000;
-  const viewportHeight = 1000;
-  let sidebarInnerHeight, contentHeight;
+  let sidebarInnerHeight;
 
   let wrapperElement, sidebarElement, sidebarInnerElement, contentElement;
-  let floatSidebar
+  let floatSidebar;
 
   let changeStateSpy;
 
@@ -32,7 +28,6 @@ describe('transitions', function() {
 
   function setContentHeight(height) {
     contentElement.style.height = `${height}px`;
-    contentHeight = height;
   }
 
   function setSidebarInnerHeight(height) {
@@ -50,19 +45,26 @@ describe('transitions', function() {
   }
 
   before(async () => {
-    await setViewport({ width: viewportWidth, height: viewportHeight });
+    await setViewport({ width: VIEWPORT_WIDTH, height: VIEWPORT_HEIGHT });
   });
 
-  beforeEach(() => {
+  beforeEach(async () => {
     // Reset the scroll position before each test case.
     window.scrollTo({ top: 0 });
 
     changeStateSpy = sinon.spy();
 
-    wrapperElement = fixtureSidebar();
-    contentElement = queryContent(wrapperElement);
-    sidebarElement = querySidebar(wrapperElement);
-    sidebarInnerElement = querySidebarInner(wrapperElement);
+    wrapperElement = await fixture(html`
+      <div class="wrapper" style="display: flex; align-items: flex-start; padding-top: 150vh; padding-bottom: 150vh;">
+        <div class="content" style="flex: 1;"></div>
+        <div class="sidebar" style="width: 200px; position: relative;">
+          <div class="sidebar__inner"></div>
+        </div>
+      </div>
+    `);
+    contentElement = wrapperElement.querySelector('.content');
+    sidebarElement = wrapperElement.querySelector('.sidebar');
+    sidebarInnerElement = wrapperElement.querySelector('.sidebar__inner');
 
     floatSidebar = new FloatSidebar({
       sidebar: sidebarElement,
@@ -74,7 +76,7 @@ describe('transitions', function() {
   // isSideInnerFitsViewport === true
   describe('when height(sidebarInner) < height(viewport)', () => {
     beforeEach(() => {
-      setSidebarInnerHeight(viewportHeight / 2);
+      setSidebarInnerHeight(VIEWPORT_HEIGHT / 2);
     });
 
     // isSideInnerFitsPath === false
@@ -181,7 +183,7 @@ describe('transitions', function() {
   // isSideInnerFitsViewport === false
   describe('when height(sidebarInner) > height(viewport)', () => {
     beforeEach(() => {
-      setSidebarInnerHeight(viewportHeight * 2);
+      setSidebarInnerHeight(VIEWPORT_HEIGHT * 2);
     });
 
     // isSideInnerFitsPath === false
@@ -238,7 +240,7 @@ describe('transitions', function() {
         await forceUpdate();
         expectTransitionTo(BOTTOM_FIXED);
 
-        setSidebarInnerHeight(viewportHeight / 2);
+        setSidebarInnerHeight(VIEWPORT_HEIGHT / 2);
         await forceUpdate();
         expectTransitionTo(TOP_FIXED);
       });
