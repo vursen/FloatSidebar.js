@@ -1,4 +1,4 @@
-import states from './fsm-states.js';
+import * as states from './fsm-states.js';
 
 export default {
   [states.START]: [
