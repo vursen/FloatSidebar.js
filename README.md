@@ -3,7 +3,7 @@
 
 > A lightweight (2kb gzipped), zero-dependency javascript library for making a sidebar float.
 
-[Demo](https://jsfiddle.net/vursen/cj4erfnj)
+[Demo](https://jsfiddle.net/vursen/cj4erfnj/40/)
 
 The library is designed on top of the finite state machine pattern, which results in a straightforward solution that is pretty easy to understand and maintain.
 
