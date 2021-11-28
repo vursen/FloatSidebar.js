@@ -61,7 +61,7 @@ export default {
     },
     {
       to: states.FINISH,
-      when: (d) => [d.viewportTop + d.sideInnerHeight > d.finishPoint]
+      when: (d) => [d.viewportBottom > d.finishPoint]
     },
     {
       to: states.TOP_FIXED,
