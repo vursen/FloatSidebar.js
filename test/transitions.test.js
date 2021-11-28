@@ -205,7 +205,7 @@ describe('transitions', function() {
     // isSideInnerWithinPath === true
     describe('when height(content) > height(sidebarInner)', () => {
       beforeEach(async () => {
-        setContentHeight(sidebarInnerHeight * 2);
+        setContentHeight(sidebarInnerHeight * 1.5);
         await nextFrame();
       });
 
@@ -220,7 +220,7 @@ describe('transitions', function() {
         await forceUpdate();
         expectTransitionTo(BOTTOM_FIXED);
 
-        setContentHeight(sidebarInnerHeight / 2);
+        setContentHeight(sidebarInnerHeight / 1.5);
         await forceUpdate();
         expectTransitionTo(START);
       });
@@ -274,7 +274,7 @@ describe('transitions', function() {
         await forceUpdate();
         expectTransitionTo(UNFIXED);
 
-        setContentHeight(sidebarInnerHeight / 2);
+        setContentHeight(sidebarInnerHeight / 1.5);
         await forceUpdate();
         expectTransitionTo(START);
       });
@@ -408,7 +408,7 @@ describe('transitions', function() {
       });
 
       it('START => FINISH', async () => {
-        await scrollTo(getElementBottom(contentElement) - window.innerHeight);
+        await scrollTo(getElementBottom(contentElement) - window.innerHeight + 1);
         await forceUpdate();
         expectTransitionTo(FINISH);
       });
