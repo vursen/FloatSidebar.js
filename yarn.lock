@@ -30,13 +30,6 @@
   dependencies:
     "@types/chai" "^4.2.12"
 
-"@esm-bundle/chai@^4.3.4-fix.0":
-  version "4.3.4-fix.0"
-  resolved "https://registry.yarnpkg.com/@esm-bundle/chai/-/chai-4.3.4-fix.0.tgz#3084cff7eb46d741749f47f3a48dbbdcbaf30a92"
-  integrity sha512-26SKdM4uvDWlY8/OOOxSB1AqQWeBosCX3wRYUZO7enTAj03CtVxIiCimYVG2WpULcyV51qapK4qTovwkUr5Mlw==
-  dependencies:
-    "@types/chai" "^4.2.12"
-
 "@lit/reactive-element@^1.0.0":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@lit/reactive-element/-/reactive-element-1.0.1.tgz#853cacd4d78d79059f33f66f8e7b0e5c34bee294"
