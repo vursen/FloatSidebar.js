@@ -3,7 +3,7 @@
  * @version v1.2.4
  * @link https://github.com/vursen/FloatSidebar.js
  * @author Sergey Vinogradov
- * @license The MIT License (MIT)
+ * @license MIT
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -163,22 +163,22 @@ function fsm_transitions_defineProperty(obj, key, value) { if (key in obj) { Obj
 /* harmony default export */ var fsm_transitions = (fsm_transitions_states$START$states$ = {}, fsm_transitions_defineProperty(fsm_transitions_states$START$states$, START, [{
   to: FINISH,
   when: function when(d) {
-    return [d.isSideInnerFitsPath === true, d.viewportTop + d.sideInnerHeight > d.finishPoint];
+    return [d.isSideInnerWithinPath === true, d.viewportTop + d.sideInnerHeight + d.bottomSpacing > d.finishPoint, d.viewportBottom > d.finishPoint];
   }
 }, {
   to: BOTTOM_FIXED,
   when: function when(d) {
-    return [d.isSideInnerFitsPath === true, d.isSideInnerFitsViewport === false, d.viewportBottom > d.sideInnerBottom + d.bottomSpacing];
+    return [d.isSideInnerWithinPath === true, d.isSideInnerWithinViewport === false, d.viewportBottom > d.sideInnerBottom + d.bottomSpacing];
   }
 }, {
   to: TOP_FIXED,
   when: function when(d) {
-    return [d.isSideInnerFitsPath === true, d.isSideInnerFitsViewport === true, d.viewportTop > d.startPoint - d.topSpacing];
+    return [d.isSideInnerWithinPath === true, d.isSideInnerWithinViewport === true, d.viewportTop > d.startPoint - d.topSpacing];
   }
 }]), fsm_transitions_defineProperty(fsm_transitions_states$START$states$, TOP_FIXED, [{
   to: START,
   when: function when(d) {
-    return [d.isSideInnerFitsPath === false];
+    return [d.isSideInnerWithinPath === false];
   }
 }, {
   to: START,
@@ -193,12 +193,12 @@ function fsm_transitions_defineProperty(obj, key, value) { if (key in obj) { Obj
 }, {
   to: UNFIXED,
   when: function when(d) {
-    return [d.scrollDirection === 'down', d.isSideInnerFitsViewport === false];
+    return [d.scrollDirection === 'down', d.isSideInnerWithinViewport === false];
   }
 }]), fsm_transitions_defineProperty(fsm_transitions_states$START$states$, UNFIXED, [{
   to: START,
   when: function when(d) {
-    return [d.isSideInnerFitsPath === false];
+    return [d.isSideInnerWithinPath === false];
   }
 }, {
   to: START,
@@ -208,7 +208,7 @@ function fsm_transitions_defineProperty(obj, key, value) { if (key in obj) { Obj
 }, {
   to: FINISH,
   when: function when(d) {
-    return [d.viewportTop + d.sideInnerHeight > d.finishPoint];
+    return [d.viewportBottom > d.finishPoint];
   }
 }, {
   to: TOP_FIXED,
@@ -218,22 +218,22 @@ function fsm_transitions_defineProperty(obj, key, value) { if (key in obj) { Obj
 }, {
   to: TOP_FIXED,
   when: function when(d) {
-    return [d.isSideInnerFitsViewport === true, d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing];
+    return [d.isSideInnerWithinViewport === true, d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing];
   }
 }, {
   to: BOTTOM_FIXED,
   when: function when(d) {
-    return [d.isSideInnerFitsViewport === false, d.viewportBottom > d.sideInnerBottom + d.bottomSpacing];
+    return [d.isSideInnerWithinViewport === false, d.viewportBottom > d.sideInnerBottom + d.bottomSpacing];
   }
 }]), fsm_transitions_defineProperty(fsm_transitions_states$START$states$, BOTTOM_FIXED, [{
   to: START,
   when: function when(d) {
-    return [d.isSideInnerFitsPath === false];
+    return [d.isSideInnerWithinPath === false];
   }
 }, {
   to: START,
   when: function when(d) {
-    return [d.isSideInnerFitsPath === true, d.sideInnerTop <= d.startPoint - d.topSpacing];
+    return [d.isSideInnerWithinPath === true, d.sideInnerTop <= d.startPoint - d.topSpacing];
   }
 }, {
   to: UNFIXED,
@@ -243,7 +243,7 @@ function fsm_transitions_defineProperty(obj, key, value) { if (key in obj) { Obj
 }, {
   to: TOP_FIXED,
   when: function when(d) {
-    return [d.isSideInnerFitsViewport === true];
+    return [d.isSideInnerWithinViewport === true];
   }
 }, {
   to: FINISH,
@@ -253,7 +253,7 @@ function fsm_transitions_defineProperty(obj, key, value) { if (key in obj) { Obj
 }]), fsm_transitions_defineProperty(fsm_transitions_states$START$states$, FINISH, [{
   to: START,
   when: function when(d) {
-    return [d.isSideInnerFitsPath === false];
+    return [d.isSideInnerWithinPath === false];
   }
 }, {
   to: START,
@@ -367,8 +367,8 @@ function createDimensionObserver(callback, _ref) {
 
     var pathHeight = finishPoint - startPoint;
 
-    var isSideInnerFitsViewport = dim$sideInner.height + topSpacing + bottomSpacing < dim$viewport.height;
-    var isSideInnerFitsPath = dim$sideInner.height < pathHeight;
+    var isSideInnerWithinViewport = dim$sideInner.height + topSpacing + bottomSpacing < dim$viewport.height;
+    var isSideInnerWithinPath = dim$sideInner.height < pathHeight;
 
     var sideOuterHeight = Math.max(dim$sideInner.height, pathHeight);
 
@@ -378,8 +378,8 @@ function createDimensionObserver(callback, _ref) {
       topSpacing: topSpacing,
       bottomSpacing: bottomSpacing,
       scrollDirection: scrollDirection,
-      isSideInnerFitsPath: isSideInnerFitsPath,
-      isSideInnerFitsViewport: isSideInnerFitsViewport,
+      isSideInnerWithinPath: isSideInnerWithinPath,
+      isSideInnerWithinViewport: isSideInnerWithinViewport,
 
       sideOuterHeight: sideOuterHeight,
 
