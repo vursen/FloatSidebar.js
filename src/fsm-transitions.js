@@ -6,7 +6,8 @@ export default {
       to: states.FINISH,
       when: (d) => [
         d.isSideInnerWithinPath === true,
-        d.viewportTop + d.sideInnerHeight > d.finishPoint
+        d.viewportTop + d.sideInnerHeight + d.bottomSpacing > d.finishPoint,
+        d.viewportBottom > d.finishPoint
       ]
     },
     {
