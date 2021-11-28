@@ -5,23 +5,23 @@ export default {
     {
       to: states.FINISH,
       when: (d) => [
-        d.isSideInnerFitsPath === true,
+        d.isSideInnerWithinPath === true,
         d.viewportTop + d.sideInnerHeight > d.finishPoint
       ]
     },
     {
       to: states.BOTTOM_FIXED,
       when: (d) => [
-        d.isSideInnerFitsPath === true,
-        d.isSideInnerFitsViewport === false,
+        d.isSideInnerWithinPath === true,
+        d.isSideInnerWithinViewport === false,
         d.viewportBottom > d.sideInnerBottom + d.bottomSpacing
       ],
     },
     {
       to: states.TOP_FIXED,
       when: (d) => [
-        d.isSideInnerFitsPath === true,
-        d.isSideInnerFitsViewport === true,
+        d.isSideInnerWithinPath === true,
+        d.isSideInnerWithinViewport === true,
         d.viewportTop > d.startPoint - d.topSpacing
       ]
     }
@@ -30,7 +30,7 @@ export default {
   [states.TOP_FIXED]: [
     {
       to: states.START,
-      when: (d) => [d.isSideInnerFitsPath === false],
+      when: (d) => [d.isSideInnerWithinPath === false],
     },
     {
       to: states.START,
@@ -44,7 +44,7 @@ export default {
       to: states.UNFIXED,
       when: (d) => [
         d.scrollDirection === 'down',
-        d.isSideInnerFitsViewport === false
+        d.isSideInnerWithinViewport === false
       ]
     },
   ],
@@ -52,7 +52,7 @@ export default {
   [states.UNFIXED]: [
     {
       to: states.START,
-      when: (d) => [d.isSideInnerFitsPath === false],
+      when: (d) => [d.isSideInnerWithinPath === false],
     },
     {
       to: states.START,
@@ -72,14 +72,14 @@ export default {
     {
       to: states.TOP_FIXED,
       when: (d) => [
-        d.isSideInnerFitsViewport === true,
+        d.isSideInnerWithinViewport === true,
         d.viewportBottom >= d.sideInnerBottom + d.bottomSpacing
       ]
     },
     {
       to: states.BOTTOM_FIXED,
       when: (d) => [
-        d.isSideInnerFitsViewport === false,
+        d.isSideInnerWithinViewport === false,
         d.viewportBottom > d.sideInnerBottom + d.bottomSpacing
       ]
     }
@@ -88,12 +88,12 @@ export default {
   [states.BOTTOM_FIXED]: [
     {
       to: states.START,
-      when: (d) => [d.isSideInnerFitsPath === false],
+      when: (d) => [d.isSideInnerWithinPath === false],
     },
     {
       to: states.START,
       when: (d) => [
-        d.isSideInnerFitsPath === true,
+        d.isSideInnerWithinPath === true,
         d.sideInnerTop <= d.startPoint - d.topSpacing
       ]
     },
@@ -103,7 +103,7 @@ export default {
     },
     {
       to: states.TOP_FIXED,
-      when: (d) => [d.isSideInnerFitsViewport === true,]
+      when: (d) => [d.isSideInnerWithinViewport === true,]
     },
     {
       to: states.FINISH,
@@ -114,7 +114,7 @@ export default {
   [states.FINISH]: [
     {
       to: states.START,
-      when: (d) => [d.isSideInnerFitsPath === false],
+      when: (d) => [d.isSideInnerWithinPath === false],
     },
     {
       to: states.START,

@@ -46,8 +46,8 @@ function createDimensionObserver(callback, {
 
     let pathHeight  = finishPoint - startPoint;
 
-    let isSideInnerFitsViewport = dim$sideInner.height + topSpacing + bottomSpacing < dim$viewport.height;
-    let isSideInnerFitsPath     = dim$sideInner.height < pathHeight;
+    let isSideInnerWithinViewport = dim$sideInner.height + topSpacing + bottomSpacing < dim$viewport.height;
+    let isSideInnerWithinPath     = dim$sideInner.height < pathHeight;
 
     let sideOuterHeight = Math.max(dim$sideInner.height, pathHeight);
 
@@ -57,8 +57,8 @@ function createDimensionObserver(callback, {
       topSpacing,
       bottomSpacing,
       scrollDirection,
-      isSideInnerFitsPath,
-      isSideInnerFitsViewport,
+      isSideInnerWithinPath,
+      isSideInnerWithinViewport,
 
       sideOuterHeight: sideOuterHeight,
 

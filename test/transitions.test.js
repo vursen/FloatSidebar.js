@@ -73,13 +73,13 @@ describe('transitions', function() {
     });
   });
 
-  // isSideInnerFitsViewport === true
+  // isSideInnerWithinViewport === true
   describe('when height(sidebarInner) < height(viewport)', () => {
     beforeEach(() => {
       setSidebarInnerHeight(VIEWPORT_HEIGHT / 2);
     });
 
-    // isSideInnerFitsPath === false
+    // isSideInnerWithinPath === false
     describe('when height(content) < height(sidebarInner)', () => {
       beforeEach(async () => {
         setContentHeight(sidebarInnerHeight / 2);
@@ -95,7 +95,7 @@ describe('transitions', function() {
       });
     });
 
-    // isSideInnerFitsPath === true
+    // isSideInnerWithinPath === true
     describe('when height(content) > height(sidebarInner)', () => {
       beforeEach(async () => {
         setContentHeight(sidebarInnerHeight * 2);
@@ -180,13 +180,13 @@ describe('transitions', function() {
     });
   });
 
-  // isSideInnerFitsViewport === false
+  // isSideInnerWithinViewport === false
   describe('when height(sidebarInner) > height(viewport)', () => {
     beforeEach(() => {
       setSidebarInnerHeight(VIEWPORT_HEIGHT * 2);
     });
 
-    // isSideInnerFitsPath === false
+    // isSideInnerWithinPath === false
     describe('when height(content) < height(sidebarInner)', () => {
       beforeEach(async () => {
         setContentHeight(sidebarInnerHeight / 2);
@@ -202,7 +202,7 @@ describe('transitions', function() {
       });
     });
 
-    // isSideInnerFitsPath === true
+    // isSideInnerWithinPath === true
     describe('when height(content) > height(sidebarInner)', () => {
       beforeEach(async () => {
         setContentHeight(sidebarInnerHeight * 2);
