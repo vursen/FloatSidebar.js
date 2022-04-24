@@ -3,11 +3,17 @@
 
 > A lightweight (2kb gzipped), zero-dependency javascript library for making a sidebar float.
 
-[Demo](https://jsfiddle.net/vursen/cj4erfnj/41/)
+[Demo](https://js-2sy9en.stackblitz.io)
 
-The library is designed on top of the finite state machine pattern, which results in a straightforward solution that is pretty easy to understand and maintain.
+FloatSidebar.js is a vanilla javascript library that can be used to make a sidebar float, so it would automatically stick to the window top or window bottom depending on the scroll direction until the beginning or end of the content is reached. 
 
-More about the approach in [the article on medium](https://medium.com/@vursen/state-machine-for-sticky-blocks-70ca0bf4ee97) (in Russian)
+The library supports two strategies which enable depending on the sidebar height:
+
+1. When the sidebar height > the window height, the sidebar sticks to the window bottom when scrolling down, and to the window top when scrolling up _(see the left sidebar on the video)_.
+2. When the sidebar height < the window height, the sidebar sticks to the window top _(see the right sidebar on the video)_.
+
+https://user-images.githubusercontent.com/5039436/164990489-0424b5ab-c231-4f5c-bc1b-fc3f9594e347.mov
+
 
 ## Install
 
