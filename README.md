@@ -7,10 +7,10 @@
 
 FloatSidebar.js is a vanilla javascript library that can be used to make a sidebar float, so it would automatically stick to the window top or window bottom depending on the scroll direction until the beginning or end of the content is reached. 
 
-The library supports two strategies which enable depending on the sidebar height:
+The library supports two strategies which enable depending on the sidebar's height:
 
-1. When the sidebar height > the viewport height, the sidebar sticks to the viewport bottom when scrolling down, and to the viewport top when scrolling up _(see the left sidebar on the video)_.
-2. When the sidebar height < the viewport height, the sidebar sticks to the viewport top _(see the right sidebar on the video)_.
+1. When the sidebar's height > the viewport's height, the sidebar sticks to the viewport bottom when scrolling down, and to the viewport top when scrolling up _(see the left sidebar on the video)_.
+2. When the sidebar's height < the viewport's height, the sidebar sticks to the viewport top _(see the right sidebar on the video)_.
 
 https://user-images.githubusercontent.com/5039436/164990489-0424b5ab-c231-4f5c-bc1b-fc3f9594e347.mov
 
