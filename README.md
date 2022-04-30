@@ -5,7 +5,7 @@
 
 [Demo](https://js-2sy9en.stackblitz.io)
 
-FloatSidebar.js is a vanilla javascript library that can be used to make a sidebar float, so it would automatically stick to the top or bottom of the viewport depending on the scroll direction until the beginning or end of the content is reached. 
+FloatSidebar.js is a vanilla javascript library that can be used to make a sidebar float, so it would automatically stick to the top or bottom of the viewport depending on the scroll direction as long as the beginning or end of the content is not reached. 
 
 The library supports two strategies which is enabled depending on the sidebar's height:
 
