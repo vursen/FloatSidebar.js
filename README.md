@@ -81,13 +81,13 @@ floatSidebar.destroy();
 
 ## Options
 
-| Name          | Type          | Default                     | Description                                                                         |
-| :------------ | :------------ | :-------------------------- | ----------------------------------------------------------------------------------- |
-| sidebar       | `HTMLElement` | Required                    | The sidebar element                                                                 |
-| relative      | `HTMLElement` | Required                    | The sidebar relative element, e.g. the main content                                 |
-| viewport      | `HTMLElement` | `window`                    | The viewport element                                                                |
-| sidebarInner  | `HTMLElement` | `sidebar.firstElementChild` | The sidebar inner element                                                           |
-| topSpacing    | `number`      | `0`                         | The space from the top of the viewport. Used when the sidebar is in fixed state.    |
+| Name          | Type          | Default                     | Description      |
+|:------------- |:------------- |:--------------------------- | ---------------- |
+| sidebar       | `HTMLElement` | Required                    | The sidebar element |
+| relative      | `HTMLElement` | Required                    | The sidebar relative element, e.g. the main content |
+| viewport      | `HTMLElement` | `window`                    | The viewport element |
+| sidebarInner  | `HTMLElement` | `sidebar.firstElementChild` | The sidebar inner element |
+| topSpacing    | `number`      | `0`                         | The space from the top of the viewport. Used when the sidebar is in fixed state. |
 | bottomSpacing | `number`      | `0`                         | The space from the bottom of the viewport. Used when the sidebar is in fixed state. |
 
 ## Instance API
