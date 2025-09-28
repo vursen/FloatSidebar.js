@@ -1,6 +1,6 @@
 {
   "name": "float-sidebar",
-  "description": "A lightweight (2kb gzipped), zero-dependency javascript library for making a sidebar float",
+  "description": "Lightweight (2kb gzipped), zero-dependency JavaScript library that makes sidebars float",
   "keywords": [
     "fsm",
     "sidebars",
@@ -19,23 +19,23 @@
   },
   "homepage": "https://github.com/vursen/FloatSidebar.js",
   "version": "1.2.5",
-  "main": "./dist/float-sidebar.min.js",
-  "module": "./dist/float-sidebar.js",
+  "main": "./src/float-sidebar.js",
+  "module": "./src/float-sidebar.js",
+  "exports": {
+    ".": {
+      "import": "./src/float-sidebar.js",
+      "require": "./src/float-sidebar.js"
+    }
+  },
+  "files": [
+    "src"
+  ],
   "devDependencies": {
-    "@open-wc/testing": "^3.0.2",
-    "@web/test-runner": "^0.13.20",
-    "babel-core": "^6.26.3",
-    "babel-loader": "7",
-    "babel-plugin-transform-object-assign": "6",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-es2015": "6.24.1",
-    "sinon": "^11.1.2",
-    "terser-webpack-plugin": "^3.0.0",
-    "webpack": "4.42.1",
-    "webpack-cli": "3.3.11"
+    "@open-wc/testing": "^4.0.0",
+    "@web/test-runner": "^0.20.2",
+    "sinon": "^21.0.0"
   },
   "scripts": {
-    "build": "webpack",
     "test": "web-test-runner test/**/*.test.js --node-resolve"
   },
   "repository": {
