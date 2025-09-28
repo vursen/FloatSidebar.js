@@ -4,8 +4,8 @@
 
 FloatSidebar.js is a lightweight (2kb gzipped), zero-dependency JavaScript library that creates sticky, floating sidebars. It keeps the sidebar visible in the viewport by dynamically sticking it to the top or bottom based on scroll direction and sidebar height.
 
-- **When the sidebar is taller than the viewport**, it scrolls with the content, sticking to the bottom when scrolling down and to the top when scrolling up. _(see left sidebar in the video)_.
-- **When the sidebar is shorter than the viewport**: it stays fixed at the top during scrolling (right sidebar in the video).
+- **When the sidebar is taller than the viewport**, it scrolls with the content, sticking to the bottom when scrolling down and to the top when scrolling up.
+- **When the sidebar is shorter than the viewport**: it stays fixed at the top during scrolling.
 
 https://user-images.githubusercontent.com/5039436/164990489-0424b5ab-c231-4f5c-bc1b-fc3f9594e347.mov
 
