@@ -2,16 +2,14 @@
 
 [![NPM version](https://img.shields.io/npm/v/float-sidebar.svg?style=flat)](https://www.npmjs.org/package/float-sidebar)
 
-> A lightweight (2kb gzipped), zero-dependency JavaScript library that makes sidebars float.
-
-[Demo](https://js-2sy9en.stackblitz.io)
-
-FloatSidebar.js is a lightweight JavaScript library that creates sticky, floating sidebars. It keeps the sidebar visible in the viewport by dynamically sticking it to the top or bottom based on scroll direction and sidebar height.
+FloatSidebar.js is a lightweight (2kb gzipped), zero-dependency JavaScript library that creates sticky, floating sidebars. It keeps the sidebar visible in the viewport by dynamically sticking it to the top or bottom based on scroll direction and sidebar height.
 
 1. Tall Sidebars (taller than the viewport), scrolls with the content, sticking to the bottom when scrolling down and to the top when scrolling up. _(see the left sidebar in the video)_.
 2. Short Sidebars (shorter than the viewport): Stays fixed at the top during scrolling. _(see the right sidebar in the video)_.
 
 https://user-images.githubusercontent.com/5039436/164990489-0424b5ab-c231-4f5c-bc1b-fc3f9594e347.mov
+
+[Demo](https://js-2sy9en.stackblitz.io)
 
 ## Install
 
