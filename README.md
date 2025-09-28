@@ -1,32 +1,28 @@
 # FloatSidebar.js
+
 [![NPM version](https://img.shields.io/npm/v/float-sidebar.svg?style=flat)](https://www.npmjs.org/package/float-sidebar)
 
-> A lightweight (2kb gzipped), zero-dependency javascript library for making a sidebar float.
+> A lightweight (2kb gzipped), zero-dependency JavaScript library that makes sidebars float.
 
 [Demo](https://js-2sy9en.stackblitz.io)
 
-FloatSidebar.js is a vanilla javascript library that can be used to make a sidebar float, so it would automatically stick to the top or bottom of the viewport depending on the scroll direction until the beginning or end of the content is reached. 
+FloatSidebar.js is a lightweight JavaScript library that creates sticky, floating sidebars. It keeps the sidebar visible in the viewport by dynamically sticking it to the top or bottom based on scroll direction and sidebar height.
 
-The library supports two strategies which activate depending on the sidebar's height:
-
-1. When the sidebar's height > the viewport height, the sidebar sticks to the viewport bottom when scrolling down, and to the viewport top when scrolling up _(see the left sidebar on the video)_.
-2. When the sidebar's height < the viewport height, the sidebar sticks to the viewport top _(see the right sidebar on the video)_.
+1. Tall Sidebars (taller than the viewport), scrolls with the content, sticking to the bottom when scrolling down and to the top when scrolling up. _(see the left sidebar in the video)_.
+2. Short Sidebars (shorter than the viewport): Stays fixed at the top during scrolling. _(see the right sidebar in the video)_.
 
 https://user-images.githubusercontent.com/5039436/164990489-0424b5ab-c231-4f5c-bc1b-fc3f9594e347.mov
-
 
 ## Install
 
 ```bash
 npm install float-sidebar --save
 ```
+
 or
+
 ```bash
 yarn add float-sidebar
-```
-or
-```html
-<script src="./path/to/float-sidebar.min.js"></script>
 ```
 
 ## Usage
@@ -48,7 +44,7 @@ or
 ```css
 .wrapper {
   display: flex;
-  /* Required in case of using an infinite scroll */
+  /* Required when using infinite scroll */
   align-items: flex-start;
 }
 
@@ -64,14 +60,14 @@ or
 ```javascript
 import FloatSidebar from 'float-sidebar';
 
-const sidebar  = document.querySelector('.sidebar');
+const sidebar = document.querySelector('.sidebar');
 const relative = document.querySelector('.content');
 
 const floatSidebar = FloatSidebar({
   sidebar,
   relative,
   topSpacing: 20,
-  bottomSpacing: 20
+  bottomSpacing: 20,
 });
 
 // ...
@@ -85,22 +81,21 @@ floatSidebar.destroy();
 
 ## Options
 
-| Name          | Type          | Default                     | Description      |
-|:------------- |:------------- |:--------------------------- | ---------------- |
-| sidebar       | `HTMLElement` | Required                    | The sidebar element |
-| relative      | `HTMLElement` | Required                    | The sidebar relative element, e.g. the main content |
-| viewport      | `HTMLElement` | `window`                    | The viewport element |
-| sidebarInner  | `HTMLElement` | `sidebar.firstElementChild` | The sidebar inner element |
-| topSpacing    | `number`      | `0`                         | The space from the top of the viewport. It is used when the sidebar is fixed. |
-| bottomSpacing | `number`      | `0`                         | The space from the bottom of the viewport. It is used when the sidebar is fixed. |
+| Name          | Type          | Default                     | Description                                                                         |
+| :------------ | :------------ | :-------------------------- | ----------------------------------------------------------------------------------- |
+| sidebar       | `HTMLElement` | Required                    | The sidebar element                                                                 |
+| relative      | `HTMLElement` | Required                    | The sidebar relative element, e.g. the main content                                 |
+| viewport      | `HTMLElement` | `window`                    | The viewport element                                                                |
+| sidebarInner  | `HTMLElement` | `sidebar.firstElementChild` | The sidebar inner element                                                           |
+| topSpacing    | `number`      | `0`                         | The space from the top of the viewport. Used when the sidebar is in fixed state.    |
+| bottomSpacing | `number`      | `0`                         | The space from the bottom of the viewport. Used when the sidebar is in fixed state. |
 
 ## Instance API
 
-| Method        | Description   |
-|:------------- |:------------- |
-| forceUpdate() | Recalculates all the dimensions and finally updates the position of the sidebar. |
-| destroy()     | Disposes the DOM listeners. |
-
+| Method        | Description                                                    |
+| :------------ | :------------------------------------------------------------- |
+| forceUpdate() | Recalculates the dimensions and updates the sidebar's position |
+| destroy()     | Cleans up DOM references and listeners                         |
 
 ## Similar libraries
 
