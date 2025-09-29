@@ -8,13 +8,24 @@ let computeViewportDimensions = ($viewport) => {
   return { top, bottom, height }
 }
 
-let computeElementDimensions = ($element, viewportTop) => {
+let computeElementDimensions = ($element, viewportTop, $viewport) => {
   let rect = $element.getBoundingClientRect();
 
-  return {
-    top:    rect.top    + viewportTop,
-    bottom: rect.bottom + viewportTop,
-    height: rect.height
+  if ($viewport === window) {
+    // Window viewport: viewportTop is pageYOffset, works as before
+    return {
+      top:    rect.top    + viewportTop,
+      bottom: rect.bottom + viewportTop,
+      height: rect.height
+    }
+  } else {
+    // Custom viewport: rect is relative to window, need document coordinates
+    let documentScrollTop = window.pageYOffset || 0;
+    return {
+      top:    rect.top    + documentScrollTop,
+      bottom: rect.bottom + documentScrollTop,
+      height: rect.height
+    }
   }
 }
 
@@ -35,9 +46,9 @@ function createDimensionObserver(callback, {
 
   let computeDimensions = () => {
     let dim$viewport  = computeViewportDimensions($viewport);
-    let dim$sideInner = computeElementDimensions($sideInner, dim$viewport.top);
-    let dim$sideOuter = computeElementDimensions($sideOuter, dim$viewport.top);
-    let dim$relative  = computeElementDimensions($relative,  dim$viewport.top);
+    let dim$sideInner = computeElementDimensions($sideInner, dim$viewport.top, $viewport);
+    let dim$sideOuter = computeElementDimensions($sideOuter, dim$viewport.top, $viewport);
+    let dim$relative  = computeElementDimensions($relative,  dim$viewport.top, $viewport);
 
     let scrollDirection = computeScrollDirection(dim$viewport.top);
 
