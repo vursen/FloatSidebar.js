@@ -33,10 +33,12 @@
   "devDependencies": {
     "@open-wc/testing": "^4.0.0",
     "@web/test-runner": "^0.20.2",
+    "@web/dev-server": "^0.4.6",
     "sinon": "^21.0.0"
   },
   "scripts": {
-    "test": "web-test-runner test/**/*.test.js --node-resolve"
+    "test": "web-test-runner test/**/*.test.js --node-resolve",
+    "start": "web-dev-server --open --watch --node-resolve"
   },
   "repository": {
     "type": "git",
