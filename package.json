@@ -18,7 +18,7 @@
     "url": "https://github.com/vursen/FloatSidebar.js/issues"
   },
   "homepage": "https://github.com/vursen/FloatSidebar.js",
-  "version": "1.2.5",
+  "version": "1.3.0",
   "main": "./src/float-sidebar.js",
   "module": "./src/float-sidebar.js",
   "exports": {
