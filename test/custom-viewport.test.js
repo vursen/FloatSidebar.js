@@ -128,6 +128,23 @@ describe('custom viewport', () => {
         1
       )
     })
+
+    it('TOP_FIXED follows the viewport when it is resized, without forceUpdate()', async () => {
+      await scrollElementTo(viewportElement, 300)
+      await forceUpdate()
+      expectTransitionTo(TOP_FIXED)
+
+      // Moving the top edge also changes the height, which ResizeObserver reports.
+      viewportElement.style.top = `${VIEWPORT_OFFSET + 50}px`
+      await nextFrame()
+      await nextFrame()
+      await nextFrame()
+      expectNoTransitions()
+      expect(sidebarInnerElement.getBoundingClientRect().top).to.be.closeTo(
+        getViewportBox().top + TOP_SPACING,
+        1
+      )
+    })
   })
 
   describe('when height(sidebarInner) > height(viewport)', () => {

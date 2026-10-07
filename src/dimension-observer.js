@@ -99,13 +99,15 @@ function createDimensionObserver(callback, {
 
   let throttledTick = requestAnimationFrameThrottle(tick);
 
+  let resizeObserver = new ResizeObserver(throttledTick);
+  let $resizeTarget  = $viewport === window ? document.documentElement : $viewport;
+
   let start = () => {
     $viewport.addEventListener('scroll', throttledTick);
+    resizeObserver.observe($resizeTarget);
 
-    // `resize` is only dispatched on window. Scrolling the window moves a
-    // custom viewport element within the window, which moves the fixed states.
-    window.addEventListener('resize', throttledTick);
-
+    // Scrolling the window moves a custom viewport element within the window,
+    // which moves the fixed states.
     if ($viewport !== window) {
       window.addEventListener('scroll', throttledTick);
     }
@@ -115,8 +117,11 @@ function createDimensionObserver(callback, {
 
   let stop = () => {
     $viewport.removeEventListener('scroll', throttledTick);
-    window.removeEventListener('resize', throttledTick);
-    window.removeEventListener('scroll', throttledTick);
+    resizeObserver.disconnect();
+
+    if ($viewport !== window) {
+      window.removeEventListener('scroll', throttledTick);
+    }
   }
 
   return { start, stop, tick };
