@@ -75,13 +75,29 @@ floatSidebar.forceUpdate();
 floatSidebar.destroy();
 ```
 
+### Custom viewport
+
+When the page itself does not scroll but a container does, pass that container as `viewport`. The spacing options are then measured from the edges of the container, and the sidebar is kept within it.
+
+```javascript
+const floatSidebar = FloatSidebar({
+  sidebar,
+  relative,
+  viewport: document.querySelector('.scroll-container'),
+  topSpacing: 20,
+  bottomSpacing: 20,
+});
+```
+
+See [examples/custom-viewport.html](examples/custom-viewport.html).
+
 ## Options
 
 | Name          | Type          | Default                     | Description      |
 |:------------- |:------------- |:--------------------------- | ---------------- |
 | sidebar       | `HTMLElement` | Required                    | The sidebar element |
 | relative      | `HTMLElement` | Required                    | The sidebar relative element, e.g. the main content |
-| viewport      | `HTMLElement` | `window`                    | The viewport element |
+| viewport      | `HTMLElement` | `window`                    | The scrollable element the sidebar lives in. `topSpacing` and `bottomSpacing` are measured from the edges of this element. |
 | sidebarInner  | `HTMLElement` | `sidebar.firstElementChild` | The sidebar inner element |
 | topSpacing    | `number`      | `0`                         | The space from the top of the viewport. Used when the sidebar is in fixed state. |
 | bottomSpacing | `number`      | `0`                         | The space from the bottom of the viewport. Used when the sidebar is in fixed state. |

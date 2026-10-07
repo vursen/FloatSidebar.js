@@ -8,13 +8,17 @@ function createFSM({ actions, transitions, initialState }) {
       });
   }
 
+  let performAction = (...args) => {
+    actions[currentState](...args);
+  }
+
   let performTransition = ({ to: newState }) => (...args) => {
     currentState = newState;
 
-    actions[newState](...args);
+    performAction(...args);
   }
 
-  return { findTransitionFor, performTransition };
+  return { findTransitionFor, performTransition, performAction };
 }
 
 export default createFSM;

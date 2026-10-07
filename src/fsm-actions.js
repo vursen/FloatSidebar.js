@@ -9,7 +9,7 @@ export default {
 
   [states.TOP_FIXED]: (d, { $sideInner }) => {
     $sideInner.style.position = 'fixed';
-    $sideInner.style.top      = `${d.topSpacing}px`;
+    $sideInner.style.top      = `${d.viewportOffsetTop + d.topSpacing}px`;
     $sideInner.style.bottom   = 'auto';
   },
 
@@ -22,7 +22,7 @@ export default {
   [states.BOTTOM_FIXED]: (d, { $sideInner }) => {
     $sideInner.style.position = 'fixed';
     $sideInner.style.top      = 'auto';
-    $sideInner.style.bottom   = `${d.bottomSpacing}px`;
+    $sideInner.style.bottom   = `${d.viewportOffsetBottom + d.bottomSpacing}px`;
   },
 
   [states.FINISH]: (_d, { $sideInner }) => {

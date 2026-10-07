@@ -1,19 +1,34 @@
 import { requestAnimationFrameThrottle } from './throttle.js';
 
 let computeViewportDimensions = ($viewport) => {
-  let height = $viewport.clientHeight || $viewport.innerHeight;
-  let top    = $viewport.scrollTop    || $viewport.pageYOffset;
-  let bottom = top + height;
+  if ($viewport === window) {
+    let top    = window.pageYOffset;
+    let height = window.innerHeight;
 
-  return { top, bottom, height }
+    return { top, bottom: top + height, height, offsetTop: 0, offsetBottom: 0 }
+  }
+
+  let rect   = $viewport.getBoundingClientRect();
+  let top    = $viewport.scrollTop;
+  let height = $viewport.clientHeight;
+
+  // Where the viewport's padding box sits in the window. Elements are measured
+  // relative to it and the fixed states are offset by it, so that
+  // `position: fixed` lands inside the viewport element instead of the window.
+  let offsetTop    = rect.top + $viewport.clientTop;
+  let offsetBottom = window.innerHeight - offsetTop - height;
+
+  return { top, bottom: top + height, height, offsetTop, offsetBottom }
 }
 
-let computeElementDimensions = ($element, viewportTop) => {
+// Positions are relative to the viewport's scrollable content:
+// 0 is the top of the content when the viewport is scrolled to the top.
+let computeElementDimensions = ($element, viewport) => {
   let rect = $element.getBoundingClientRect();
 
   return {
-    top:    rect.top    + viewportTop,
-    bottom: rect.bottom + viewportTop,
+    top:    rect.top    - viewport.offsetTop + viewport.top,
+    bottom: rect.bottom - viewport.offsetTop + viewport.top,
     height: rect.height
   }
 }
@@ -35,9 +50,9 @@ function createDimensionObserver(callback, {
 
   let computeDimensions = () => {
     let dim$viewport  = computeViewportDimensions($viewport);
-    let dim$sideInner = computeElementDimensions($sideInner, dim$viewport.top);
-    let dim$sideOuter = computeElementDimensions($sideOuter, dim$viewport.top);
-    let dim$relative  = computeElementDimensions($relative,  dim$viewport.top);
+    let dim$sideInner = computeElementDimensions($sideInner, dim$viewport);
+    let dim$sideOuter = computeElementDimensions($sideOuter, dim$viewport);
+    let dim$relative  = computeElementDimensions($relative,  dim$viewport);
 
     let scrollDirection = computeScrollDirection(dim$viewport.top);
 
@@ -65,6 +80,9 @@ function createDimensionObserver(callback, {
       viewportTop:    dim$viewport.top,
       viewportBottom: dim$viewport.bottom,
 
+      viewportOffsetTop:    dim$viewport.offsetTop,
+      viewportOffsetBottom: dim$viewport.offsetBottom,
+
       sideInnerTop:    dim$sideInner.top,
       sideInnerBottom: dim$sideInner.bottom,
       sideInnerHeight: dim$sideInner.height,
@@ -83,14 +101,22 @@ function createDimensionObserver(callback, {
 
   let start = () => {
     $viewport.addEventListener('scroll', throttledTick);
-    $viewport.addEventListener('resize', throttledTick);
+
+    // `resize` is only dispatched on window. Scrolling the window moves a
+    // custom viewport element within the window, which moves the fixed states.
+    window.addEventListener('resize', throttledTick);
+
+    if ($viewport !== window) {
+      window.addEventListener('scroll', throttledTick);
+    }
 
     tick();
   }
 
   let stop = () => {
     $viewport.removeEventListener('scroll', throttledTick);
-    $viewport.removeEventListener('resize', throttledTick);
+    window.removeEventListener('resize', throttledTick);
+    window.removeEventListener('scroll', throttledTick);
   }
 
   return { start, stop, tick };
