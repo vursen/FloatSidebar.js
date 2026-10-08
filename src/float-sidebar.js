@@ -25,17 +25,19 @@ function FloatSidebar(options) {
   let dimensionObserver = createDimensionObserver(
     (prevDimensions, dimensions) => {
       let transition = fsm.findTransitionFor(dimensions);
+      let elements   = { $sideInner, $sideOuter, $relative };
 
       if (transition) {
-        fsm.performTransition(transition)(dimensions, {
-          $sideInner,
-          $sideOuter,
-          $relative
-        });
+        fsm.performTransition(transition)(dimensions, elements);
 
         if (onStateChange) {
           onStateChange(transition.to);
         }
+      } else if (isViewportOffsetChanged(prevDimensions, dimensions)) {
+        // The viewport element moved within the window. The fixed states are
+        // positioned against the window, so the current state's styles have
+        // to be applied again.
+        fsm.performAction(dimensions, elements);
       }
 
       updateSideOuterHeight(prevDimensions, dimensions);
@@ -48,6 +50,11 @@ function FloatSidebar(options) {
       topSpacing,
       bottomSpacing
     }
+  )
+
+  let isViewportOffsetChanged = (prevDimensions, dimensions) => (
+    (prevDimensions.viewportOffsetTop    || 0) !== dimensions.viewportOffsetTop ||
+    (prevDimensions.viewportOffsetBottom || 0) !== dimensions.viewportOffsetBottom
   )
 
   let updateSideOuterHeight = (prevDimensions, dimensions) => {
